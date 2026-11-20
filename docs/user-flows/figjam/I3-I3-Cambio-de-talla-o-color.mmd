@@ -1,0 +1,29 @@
+flowchart TD
+  S(["Busca la venta y pulsa<br/>Cambiar en la prenda"]):::persona --> A{"¿Dentro del plazo?"}:::decision
+  A -->|"No"| A1["Solo SUP"]:::pin
+  A1 --> B
+  A -->|"Sí"| B("Elige la prenda nueva<br/>escanea o busca"):::persona
+  B --> C["Muestra stock por talla y color"]:::sistema
+  C --> D{"¿Hay stock de la nueva?"}:::decision
+  D -->|"No"| D1["Otras tallas y colores, otras sedes<br/>o convertir en devolución simple"]:::sistema
+  D1 --> B
+  D -->|"Sí"| E{"¿El precio actual<br/>de la original bajó?"}:::decision
+  E -->|"Sí"| E1["Se cambia por el valor pagado<br/>con aviso"]:::sistema
+  E1 --> F
+  E -->|"No"| F["Calcula la diferencia"]:::sistema
+  F --> G{"¿Diferencia?"}:::decision
+  G -->|"Mismo precio"| H
+  G -->|"Debe pagar"| G1("Cobra la diferencia G5"):::persona
+  G1 --> H
+  G -->|"Se devuelve"| G2{"¿Hay efectivo u otro medio?"}:::decision
+  G2 -->|"No"| G3["Elegir otra prenda para igualar"]:::error
+  G2 -->|"Sí"| H
+  H["clave del supervisor si aplica"]:::pin
+  H --> I["Por debajo: devuelve la original,<br/>crea la venta nueva,<br/>ajusta stock y caja"]:::sistema
+  I --> OK(["Imprime los comprobantes"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

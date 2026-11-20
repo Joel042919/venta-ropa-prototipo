@@ -1,0 +1,18 @@
+flowchart TD
+  S(["Confirma el cobro"]):::persona --> A{"¿Llegó la respuesta?"}:::decision
+  A -->|"Sí"| OK(["Flujo normal G6"]):::ok
+  A -->|"No, se cayó la red"| B["Consulta la última venta<br/>antes de permitir reintentar"]:::sistema
+  B --> C{"¿Se guardó la venta?"}:::decision
+  C -->|"Sí"| D(["Va a la pantalla de éxito<br/>sin duplicar"]):::ok
+  C -->|"No"| E["No se registró la venta<br/>el cliente no ha pagado en el sistema"]:::error
+  E --> F{"¿Ya se cobró en efectivo?"}:::decision
+  F -->|"Sí"| G["Guía: no entregues la prenda<br/>reintenta o devuelve el efectivo"]:::error
+  G --> H
+  F -->|"No"| H("Reintentar"):::persona
+  H --> A
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

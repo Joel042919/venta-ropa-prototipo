@@ -1,0 +1,12 @@
+flowchart LR
+  I(["Supervisor/a: Corregir el stock de una prenda dejando el motivo."]):::ini --> N1
+  N1["1. Inventario<br/>Buscas o escaneas la prenda"]:::paso
+  N1 --> N2
+  N2["2. Ajustar<br/>Eliges Entrada o Salida y la cantidad"]:::paso
+  N2 --> N3
+  N3["3. Motivo<br/>Eliges el motivo"]:::paso
+  N3 --> N4
+  N4["4. Guardar<br/>Pulsas «Guardar»"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

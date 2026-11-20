@@ -1,0 +1,14 @@
+flowchart LR
+  I(["Administrador/a: Tener los datos para emitir una boleta o factura."]):::ini --> N1
+  N1["1. Clientes<br/>Pulsas «Nuevo cliente»"]:::paso
+  N1 --> N2
+  N2["2. Documento<br/>Eliges DNI o RUC y lo escribes"]:::paso
+  N2 --> N3
+  N3["3. Validar<br/>Pulsas «Validar»"]:::paso
+  N3 --> N4
+  N4["4. Contacto<br/>Escribes teléfono (opcional)"]:::paso
+  N4 --> N5
+  N5["5. Guardar<br/>Pulsas «Guardar»"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

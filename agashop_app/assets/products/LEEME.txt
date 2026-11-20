@@ -1,0 +1,1 @@
+Pon aquí las fotos de las prendas con el código de cada una (p1.jpg a p8.jpg). Si falta una, la app dibuja la prenda.

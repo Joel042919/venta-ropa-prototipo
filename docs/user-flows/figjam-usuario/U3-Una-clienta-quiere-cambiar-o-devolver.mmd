@@ -1,0 +1,23 @@
+flowchart TD
+  T(("Una clienta vuelve con una prenda")):::disp --> P1["Devoluciones<br/>busca la compra con ticket, QR o DNI"]:::pant
+  P1 --> D1{"¿Se encuentra la compra?"}:::dec
+  D1 -->|"No"| S1["Su supervisor decide:<br/>solo cambio por otra prenda, sin dinero"]:::sup
+  S1 --> OK2(["Cambio resuelto"]):::logro
+  D1 -->|"Sí"| D2{"¿Qué quiere la clienta?"}:::dec
+  D2 -->|"Otra talla o color"| P2["Elige la prenda nueva<br/>ve el stock de cada talla"]:::pant
+  P2 --> D3{"¿Hay stock?"}:::dec
+  D3 -->|"No"| R1["Otra talla, otra sede<br/>o convertir en devolución"]:::rec
+  R1 --> D2
+  D3 -->|"Sí"| P3["Ve la diferencia:<br/>igual, a pagar o a favor"]:::pant
+  P3 --> OK1(["Cambio hecho, comprobantes impresos"]):::logro
+  D2 -->|"Quiere su dinero"| D4{"¿Está dentro del plazo?"}:::dec
+  D4 -->|"No"| S2["Su supervisor autoriza"]:::sup
+  S2 --> P4
+  D4 -->|"Sí"| P4["Elige cómo devolver<br/>sugerido: el mismo medio que usó"]:::pant
+  P4 --> OK3(["Devolución hecha, stock y caja al día"]):::logro
+classDef disp fill:#292524,stroke:#292524,color:#ffffff,stroke-width:1.5px;
+classDef pant fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef dec fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef sup fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;
+classDef rec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef logro fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;

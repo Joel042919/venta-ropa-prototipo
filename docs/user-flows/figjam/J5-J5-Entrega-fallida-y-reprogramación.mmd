@@ -1,0 +1,20 @@
+flowchart TD
+  S(["Marca Fallido y elige el motivo"]):::persona --> A["Guarda el intento en el historial"]:::sistema
+  A --> B{"¿Cuántos intentos fallidos?"}:::decision
+  B -->|"Dos o más"| B1["Sugiere devolver a tienda"]:::sistema
+  B1 --> C
+  B -->|"Uno"| C{"¿Qué decide?"}:::decision
+  C -->|"Reprogramar"| D("Nueva fecha y,<br/>si hace falta, edita la dirección"):::persona
+  D --> E["Notifica al cliente<br/>y anota el costo extra"]:::sistema
+  E --> OK1(["Vuelve a En camino"]):::ok
+  C -->|"Devolver a tienda"| F["Estado Devuelto a tienda"]:::sistema
+  F --> G{"¿Reponer o devolver el dinero?"}:::decision
+  G -->|"Reponer"| OK2(["La prenda vuelve al stock"]):::ok
+  G -->|"Devolver"| OK3(["Devolución I1"]):::ok
+  X(["El cliente no responde en 3 días"]):::persona -.-> Y["Aviso a SUP y opción de cancelar J6"]:::error
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

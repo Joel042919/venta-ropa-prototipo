@@ -1,0 +1,22 @@
+flowchart TD
+  S(["Abre el pedido"]):::persona --> Q{"¿Qué hace?"}:::decision
+  Q -->|"Avanzar al siguiente estado"| A{"¿Pasa a En camino<br/>sin courier ni guía?"}:::decision
+  A -->|"Sí"| A1["Pide courier y guía antes"]:::error
+  A1 --> B
+  A -->|"No"| B["Cambia el estado y guarda<br/>persona, hora y observación"]:::sistema
+  B --> C{"¿Es un estado clave?"}:::decision
+  C -->|"Sí"| C1["Ofrece mensaje de WhatsApp<br/>ya redactado para revisar"]:::sistema
+  C1 --> OK
+  C -->|"No"| OK(["Pedido actualizado"]):::ok
+  Q -->|"Retroceder o saltar"| D["Motivo y clave del supervisor"]:::pin
+  D --> B
+  Q -->|"Deshacer un cambio"| E{"¿Pasaron menos de 10 min?"}:::decision
+  E -->|"Sí"| E1["Deshace con motivo<br/>queda en el historial"]:::sistema
+  E -->|"No"| E2["Solo con clave del supervisor"]:::pin
+  X(["Dos personas cambian a la vez"]):::persona -.-> Y["La segunda ve:<br/>ya está En camino, actualizar"]:::error
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

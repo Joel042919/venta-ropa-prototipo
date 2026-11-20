@@ -1,0 +1,24 @@
+flowchart TD
+  S(["Crea pedido Contra entrega"]):::persona --> A{"¿Supera el límite<br/>o la zona no aplica?"}:::decision
+  A -->|"Sí"| A1["No disponible:<br/>pagar ahora"]:::error
+  A -->|"No"| B["Venta en pago pendiente<br/>no entra dinero a la caja"]:::sistema
+  B --> C["El repartidor entrega"]:::sistema
+  C --> D{"¿El cliente acepta<br/>y paga?"}:::decision
+  D -->|"Rechaza"| D1["Entrega fallida J5<br/>o cancelación J6"]:::error
+  D -->|"Paga una parte"| D2["Pago mixto G5"]:::sistema
+  D2 --> E
+  D -->|"Paga todo"| E("El repartidor rinde<br/>el dinero a caja"):::persona
+  E --> F{"¿Rinde el mismo día?"}:::decision
+  F -->|"No"| F1["Aparece como Efectivo por rendir<br/>y en el cierre de caja"]:::error
+  F1 --> G
+  F -->|"Sí"| G("Registra el pago con el medio"):::persona
+  G --> H{"¿Rindió menos de lo cobrado?"}:::decision
+  H -->|"Sí"| H1["Diferencia con observación<br/>y aviso a SUP"]:::pin
+  H1 --> OK
+  H -->|"No"| OK(["Venta completada<br/>el efectivo entra a la caja que recibe"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

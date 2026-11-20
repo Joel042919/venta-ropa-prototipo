@@ -1,0 +1,19 @@
+flowchart TD
+  T(("Termina su turno")):::disp --> P1["Cerrar caja"]:::pant
+  P1 --> D1{"¿Quedan ventas en espera?"}:::dec
+  D1 -->|"Sí"| R1["Las cobra o las descarta"]:::rec
+  R1 --> P2
+  D1 -->|"No"| P2["Conteo<br/>cuenta billetes y monedas"]:::pant
+  P2 -->|"Confirma el total contado"| D2{"¿Cuadra con lo esperado?"}:::dec
+  D2 -->|"Sí"| OK(["Turno cerrado, reporte impreso"]):::logro
+  D2 -->|"No"| P3["Escribe qué cree que pasó"]:::pant
+  P3 --> D3{"¿La diferencia es grande?"}:::dec
+  D3 -->|"Sí"| S1["Su supervisor revisa con clave"]:::sup
+  S1 --> OK
+  D3 -->|"No"| OK
+classDef disp fill:#292524,stroke:#292524,color:#ffffff,stroke-width:1.5px;
+classDef pant fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef dec fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef sup fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;
+classDef rec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef logro fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;

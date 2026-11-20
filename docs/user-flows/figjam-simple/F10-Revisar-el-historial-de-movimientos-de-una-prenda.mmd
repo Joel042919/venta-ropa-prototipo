@@ -1,0 +1,12 @@
+flowchart LR
+  I(["Supervisor/a: Entender qué pasó con el stock."]):::ini --> N1
+  N1["1. Historial de movimientos<br/>Eliges la prenda"]:::paso
+  N1 --> N2
+  N2["2. Filtros<br/>Eliges fechas o tipo de movimiento"]:::paso
+  N2 --> N3
+  N3["3. Línea de tiempo<br/>Lees entradas, salidas y saldo"]:::paso
+  N3 --> N4
+  N4["4. Documento<br/>Pulsas un movimiento"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

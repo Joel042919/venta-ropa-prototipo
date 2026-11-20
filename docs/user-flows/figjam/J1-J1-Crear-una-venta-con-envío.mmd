@@ -1,0 +1,29 @@
+flowchart TD
+  S(["Activa Envío en el carrito"]):::persona --> A("Elige o registra al cliente"):::persona
+  A --> B{"¿Tiene teléfono?"}:::decision
+  B -->|"No"| B1["Obligatorio: pide el número"]:::error
+  B1 --> C
+  B -->|"Sí"| C("Dirección, referencia y distrito"):::persona
+  C --> D{"¿Dirección completa?"}:::decision
+  D -->|"No"| D1["Indica qué falta"]:::error
+  D1 --> C
+  D -->|"Sí"| E("Costo de envío o Envío gratis"):::persona
+  E --> F{"¿Costo vacío?"}:::decision
+  F -->|"Sí"| F1["¿El envío es gratis?"]:::sistema
+  F1 --> G
+  F -->|"No"| G("Courier y fecha estimada"):::persona
+  G --> H{"¿Fecha en domingo<br/>o feriado?"}:::decision
+  H -->|"Sí"| H1["Aviso, no bloquea"]:::sistema
+  H1 --> I
+  H -->|"No"| I["Resumen:<br/>Productos + Envío = Total a cobrar"]:::sistema
+  I --> J{"¿Pagar ahora<br/>o contra entrega?"}:::decision
+  J -->|"Ahora"| K("Cobra G5"):::persona
+  J -->|"Contra entrega"| L["Venta en pago pendiente J8"]:::sistema
+  K --> OK(["Crea la venta y el envío<br/>en el estado inicial"]):::ok
+  L --> OK
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

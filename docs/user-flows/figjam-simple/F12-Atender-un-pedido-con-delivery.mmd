@@ -1,0 +1,14 @@
+flowchart LR
+  I(["Supervisor/a: Llevar la prenda a la clienta y saber en qué paso va."]):::ini --> N1
+  N1["1. Venta con envío<br/>Activas «Envío» y escribes dirección y costo"]:::paso
+  N1 --> N2
+  N2["2. Cobro<br/>Eliges pagar ahora o contra entrega"]:::paso
+  N2 --> N3
+  N3["3. Preparar<br/>Escaneas cada prenda del pedido"]:::paso
+  N3 --> N4
+  N4["4. Enviar<br/>Pones courier y guía y marcas «En camino»"]:::paso
+  N4 --> N5
+  N5["5. Entrega<br/>Marcas «Entregado»"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

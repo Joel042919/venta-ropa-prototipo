@@ -1,0 +1,28 @@
+flowchart TD
+  S(["Cerrar caja"]):::persona --> A{"¿Hay ventas en espera?"}:::decision
+  A -->|"Sí"| A1["Bloqueado: cobrar o descartar"]:::error
+  A -->|"No"| B["Revisa pendientes:<br/>comprobantes sin enviar<br/>y contra entrega por rendir"]:::sistema
+  B --> C["Resumen del turno<br/>el efectivo esperado se oculta"]:::sistema
+  C --> D("Cuenta el efectivo<br/>por billetes y monedas"):::persona
+  D --> E["¿Contaste S/ X? confirmar"]:::sistema
+  E --> F["Calcula esperado:<br/>apertura + ventas efectivo + ingresos<br/>- egresos - devoluciones efectivo"]:::sistema
+  F --> G{"¿La diferencia está<br/>dentro de la diferencia permitida?"}:::decision
+  G -->|"Sí"| G1["Caja cuadrada"]:::ok
+  G -->|"No"| H("Escribe la observación<br/>obligatoria"):::persona
+  H --> H1{"¿Diferencia mayor a S/ 20?"}:::decision
+  H1 -->|"Sí"| H2["clave del supervisor"]:::pin
+  H2 --> I
+  H1 -->|"No"| I
+  G1 --> I("Opcional: retirar efectivo<br/>a caja fuerte"):::persona
+  I --> J{"¿Hay conexión?"}:::decision
+  J -->|"No"| J1["Guarda el conteo en el equipo<br/>cierra al reconectar"]:::error
+  J -->|"Sí"| K["Estado cerrada"]:::sistema
+  K --> OK(["Reporte de cierre imprimible"]):::ok
+  Z(["La persona no está"]):::persona -.-> Y["SUP hace cierre hecho por el supervisor<br/>con conteo y observación"]:::pin
+  Y -.-> K
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

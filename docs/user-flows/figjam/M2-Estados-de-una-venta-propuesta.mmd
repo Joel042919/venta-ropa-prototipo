@@ -1,0 +1,17 @@
+stateDiagram-v2
+    state "En espera" as Es
+    state "Completada" as Co
+    state "Pago pendiente" as Pp
+    state "Devuelta en parte" as Dp
+    state "Devuelta" as Dt
+    state "Anulada" as An
+    [*] --> Es: Pone en espera
+    [*] --> Co: Cobra
+    [*] --> Pp: Envío contra entrega
+    Es --> Co: Cobra
+    Es --> [*]: Descarta
+    Pp --> Co: Cobra al entregar
+    Co --> Dp: Devuelve una parte
+    Co --> Dt: Devuelve todo
+    Co --> An: Se anula
+    Dp --> Dt: Devuelve el resto

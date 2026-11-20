@@ -1,0 +1,14 @@
+flowchart TD
+  S(["Bandeja Por reponer"]):::persona --> A["Tallas y colores con stock<br/>menor o igual al mínimo<br/>agotados primero"]:::sistema
+  A --> B{"¿Qué decide?"}:::decision
+  B -->|"Reponer"| C("Selecciona varias"):::persona
+  C --> D["Crea una compra prellenada<br/>con cantidad sugerida"]:::sistema
+  D --> OK1(["Sigue en Compras D1"]):::ok
+  B -->|"Posponer"| E["No avisar por 7 días"]:::sistema
+  B -->|"Descontinuar"| F["No volver a avisar"]:::sistema
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

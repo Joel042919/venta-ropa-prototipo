@@ -1,0 +1,26 @@
+flowchart TD
+  S(["Abre la aplicación"]):::persona --> L["Pantalla de login<br/>usuario y contraseña"]:::sistema
+  L --> I("Escribe credenciales y pulsa Ingresar"):::persona
+  I --> V{"¿Credenciales correctas?"}:::decision
+  V -->|"No"| E1["Mensaje genérico<br/>y contador de intentos"]:::error
+  E1 --> N{"¿5 intentos fallidos?"}:::decision
+  N -->|"Sí"| B["Bloqueo de 5 min<br/>o pedir ayuda a SUP"]:::error
+  N -->|"No"| L
+  V -->|"Sí"| U{"¿Usuario activo?"}:::decision
+  U -->|"No"| D["Tu usuario está desactivado<br/>habla con tu supervisor"]:::error
+  U -->|"Sí"| T{"¿Contraseña temporal?"}:::decision
+  T -->|"Sí"| C["Obliga a crear<br/>contraseña nueva"]:::sistema
+  C --> O
+  T -->|"No"| O{"¿Sesión abierta<br/>en otro equipo?"}:::decision
+  O -->|"Sí"| K["Continuar aquí cerrando el otro<br/>o cancelar"]:::sistema
+  K --> R
+  O -->|"No"| R{"¿Qué rol tiene?"}:::decision
+  R -->|"CAJ sin caja abierta"| B1(["Abrir caja B1"]):::ok
+  R -->|"CAJ con caja abierta"| P(["Entra directo al punto de venta"]):::ok
+  R -->|"SUP o ADM"| Q(["Resumen del día K2"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

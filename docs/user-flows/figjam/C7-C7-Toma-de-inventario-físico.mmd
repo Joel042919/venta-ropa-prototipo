@@ -1,0 +1,26 @@
+flowchart TD
+  S(["Contar"]):::persona --> A("Elige el alcance:<br/>tienda, categoría o zona"):::persona
+  A --> B("Escanea o busca cada prenda"):::persona
+  B --> C{"¿El código existe?"}:::decision
+  C -->|"No"| C1["Buscar por nombre<br/>o crear con permiso"]:::sistema
+  C1 --> B
+  C -->|"Sí"| D["Suma 1 por escaneo<br/>guarda el progreso en el equipo"]:::sistema
+  D --> E{"¿Terminó?"}:::decision
+  E -->|"No, pausa"| E1["Continúa después<br/>Continuar conteo del día"]:::sistema
+  E1 --> B
+  E -->|"Sí"| F["Compara con el sistema<br/>y descuenta ventas durante el conteo"]:::sistema
+  F --> G{"¿Hay tallas y colores<br/>sin contar?"}:::decision
+  G -->|"Sí"| G1["Contarlas como 0 o excluirlas"]:::sistema
+  G1 --> H
+  G -->|"No"| H["Lista de diferencias"]:::sistema
+  H --> I{"¿Más del 40 por ciento<br/>no coincide?"}:::decision
+  I -->|"Sí"| I1["Aviso: revisar antes de aplicar"]:::error
+  I1 --> J
+  I -->|"No"| J("Confirma las diferencias"):::persona
+  J --> OK(["Crea los ajustes<br/>Corrección de conteo"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

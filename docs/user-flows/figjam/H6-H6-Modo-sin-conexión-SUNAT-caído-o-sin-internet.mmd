@@ -1,0 +1,20 @@
+flowchart TD
+  S(["Se detecta una falla"]):::persona --> A{"¿Qué falla?"}:::decision
+  A -->|"SUNAT no responde<br/>el sistema sí"| B["Aviso ámbar:<br/>sigues vendiendo"]:::sistema
+  B --> B1["Los comprobantes quedan En proceso"]:::sistema
+  B1 --> B2(["Reenvío automático al volver"]):::ok
+  A -->|"Sin internet"| C["Aviso rojo"]:::error
+  C --> D{"¿El negocio habilitó<br/>el modo local?"}:::decision
+  D -->|"No"| D1["Bloquea las ventas<br/>hasta reconectar"]:::error
+  D -->|"Sí"| E["Vende con límite:<br/>hasta 20 ventas o 2 horas"]:::sistema
+  E --> F["Aviso: el stock puede<br/>no estar actualizado"]:::sistema
+  F --> G["Al reconectar: sincroniza<br/>18 enviadas, 2 con problemas"]:::sistema
+  G --> H{"¿Quedó stock negativo?"}:::decision
+  H -->|"Sí"| H1["Lista para que SUP regularice"]:::pin
+  H -->|"No"| OK(["Todo sincronizado"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

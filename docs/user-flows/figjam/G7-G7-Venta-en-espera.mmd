@@ -1,0 +1,19 @@
+flowchart TD
+  S(["Pulsa En espera F4"]):::persona --> A{"¿Ya hay 5 en espera?"}:::decision
+  A -->|"Sí"| A1["Límite alcanzado:<br/>cobrar o descartar una"]:::error
+  A -->|"No"| B["Guarda el carrito con hora y cliente"]:::sistema
+  B --> C("Atiende a otra persona"):::persona
+  C --> D("Abre Ventas en espera<br/>y elige una"):::persona
+  D --> E["Revalida stock y precios"]:::sistema
+  E --> F{"¿Alguna prenda<br/>ya no está disponible?"}:::decision
+  F -->|"Sí"| F1["Marca Ya no disponible"]:::error
+  F1 --> OK
+  F -->|"No"| OK(["Continúa la venta"]):::ok
+  X(["El cliente se fue"]):::persona -.-> Y["Descartar con confirmación"]:::sistema
+  Z(["Cierre de caja con esperas"]):::persona -.-> W["Bloqueado hasta resolverlas B3"]:::error
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

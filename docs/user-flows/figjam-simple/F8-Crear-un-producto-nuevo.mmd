@@ -1,0 +1,16 @@
+flowchart LR
+  I(["Supervisor/a: Dejar la prenda lista para vender, con todas sus tallas y colores."]):::ini --> N1
+  N1["1. Productos<br/>Pulsas «Nuevo producto»"]:::paso
+  N1 --> N2
+  N2["2. Datos<br/>Escribes nombre y eliges categoría"]:::paso
+  N2 --> N3
+  N3["3. Tallas y colores<br/>Eliges tallas y colores"]:::paso
+  N3 --> N4
+  N4["4. Precios y stock<br/>Escribes precio, costo y stock"]:::paso
+  N4 --> N5
+  N5["5. Revisar<br/>Confirmas el resumen"]:::paso
+  N5 --> N6
+  N6["6. Guardar<br/>Pulsas «Guardar»"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

@@ -1,0 +1,20 @@
+flowchart TD
+  S(["Cancelar pedido"]):::persona --> A("Motivo obligatorio"):::persona
+  A --> B{"¿En qué estado está?"}:::decision
+  B -->|"Antes de preparar<br/>o preparando"| C{"¿Está pagado?"}:::decision
+  C -->|"Sí"| C1["clave del supervisor"]:::pin
+  C1 --> D
+  C -->|"No"| D["Cancela y el stock vuelve"]:::sistema
+  D --> E["Anula o emite nota de crédito<br/>y reembolsa H5 I5"]:::sistema
+  E --> OK1(["Pedido cancelado"]):::ok
+  B -->|"En camino"| F["No se cancela:<br/>se espera el retorno"]:::error
+  F --> G["Marca Devuelto a tienda<br/>al regresar"]:::sistema
+  G --> E
+  B -->|"Entregado"| H(["Es una devolución I1"]):::ok
+  X(["El courier perdió el paquete"]):::persona -.-> Y["Estado Extraviado<br/>nota de crédito o reposición"]:::pin
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

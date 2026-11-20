@@ -1,0 +1,31 @@
+flowchart TD
+  S(["Nuevo cliente"]):::persona --> A("Elige tipo de documento<br/>y escribe el número"):::persona
+  A --> B{"¿Formato válido?"}:::decision
+  B -->|"No"| B1["Error junto al campo"]:::error
+  B1 --> A
+  B -->|"Sí"| C{"¿Ya existe el documento?"}:::decision
+  C -->|"Sí"| C1["Ya está registrado:<br/>usar este cliente"]:::sistema
+  C1 --> C2{"¿Pertenece a otra sede?"}:::decision
+  C2 -->|"Sí"| C3["Aviso: registrado en otra sede<br/>se puede usar"]:::sistema
+  C2 -->|"No"| OK0
+  C3 --> OK0(["Cliente listo para la venta"]):::ok
+  C -->|"No"| D("Pulsa Validar"):::persona
+  D --> E{"¿El servicio responde?"}:::decision
+  E -->|"No"| E1["Completar a mano<br/>marca Sin validar"]:::error
+  E1 --> G
+  E -->|"Sí"| F{"¿Encontró el documento?"}:::decision
+  F -->|"No"| F1["Revisa el número<br/>o completa a mano"]:::error
+  F1 --> G
+  F -->|"Sí"| F2["Autocompleta nombre y dirección"]:::sistema
+  F2 --> F3{"¿RUC de baja o no habido?"}:::decision
+  F3 -->|"Sí"| F4["Aviso fuerte<br/>se desaconseja factura"]:::error
+  F4 --> G
+  F3 -->|"No"| G("Teléfono y correo opcionales"):::persona
+  G --> H["Guarda el cliente"]:::sistema
+  H --> OK0
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

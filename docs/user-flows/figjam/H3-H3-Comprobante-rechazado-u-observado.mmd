@@ -1,0 +1,17 @@
+flowchart TD
+  S(["Abre un comprobante<br/>No aceptado"]):::persona --> A["Muestra el motivo<br/>en lenguaje claro"]:::sistema
+  A --> B{"¿Se puede corregir<br/>en pantalla?"}:::decision
+  B -->|"Sí"| C("Corrige solo lo permitido,<br/>ejemplo datos del cliente"):::persona
+  C --> D["Reenvía con el mismo número"]:::sistema
+  D --> E{"¿Fue aceptado?"}:::decision
+  E -->|"Sí"| OK(["Comprobante aceptado"]):::ok
+  E -->|"No"| F["Muestra el nuevo motivo"]:::error
+  F --> B
+  B -->|"No, es el monto"| G["Anular y reemitir H5"]:::pin
+  S2(["Observado"]):::persona -.-> O["Aviso para revisar,<br/>sin reenviar"]:::sistema
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

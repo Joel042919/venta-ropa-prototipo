@@ -1,0 +1,27 @@
+flowchart TD
+  S(["Entra al punto de venta"]):::persona --> A{"¿La caja está abierta?"}:::decision
+  A -->|"No"| A1["Lleva a Abrir caja B1"]:::error
+  A -->|"Sí"| B("Agrega prendas G2<br/>escáner, búsqueda o grilla"):::persona
+  B --> C["Carrito siempre visible con total G3"]:::sistema
+  C --> D("Opcional: cliente y tipo<br/>de comprobante G4"):::persona
+  D --> E("Opcional: descuento G3"):::persona
+  E --> F("Pulsa Cobrar F9"):::persona
+  F --> G("Elige el medio de pago<br/>y confirma G5"):::persona
+  G --> H["Revalida stock y precios"]:::sistema
+  H --> I{"¿Cambió algo?"}:::decision
+  I -->|"Sí"| I1["Avisa y pide decidir"]:::error
+  I1 --> C
+  I -->|"No"| J["En una sola operación:<br/>reserva número, registra venta y pagos,<br/>descuenta stock y anota historial de movimientos"]:::sistema
+  J --> K["Crea el comprobante y lo envía G6"]:::sistema
+  K --> L{"¿Respuesta de SUNAT?"}:::decision
+  L -->|"Aceptado"| L1(["Ticket: imprimir, WhatsApp o correo"]):::ok
+  L -->|"Pendiente"| L2(["Venta registrada<br/>envío en segundo plano"]):::ok
+  L -->|"Rechazado"| L3["Bandeja de errores H3"]:::error
+  L1 --> Z(["Nueva venta<br/>el cursor vuelve al buscador"]):::ok
+  L2 --> Z
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

@@ -1,0 +1,18 @@
+flowchart TD
+  S(["¿Qué se corrige?"]):::decision
+  S -->|"Movimiento equivocado"| A["Crear movimiento contrario<br/>con motivo y enlace al original"]:::pin
+  A --> A1{"¿Deja el efectivo negativo?"}:::decision
+  A1 -->|"Sí"| A2["Bloqueado con explicación"]:::error
+  A1 -->|"No"| OKA(["Corregido sin editar el original"]):::ok
+  S -->|"Error en el dinero de apertura"| B["Movimiento Ajuste de apertura<br/>con observación"]:::pin
+  B --> OKA
+  S -->|"Cerré por error"| C{"¿Mismo día y la caja<br/>no tiene otra sesión?"}:::decision
+  C -->|"No"| C1["Bloqueado: corregir con<br/>ajuste en la sesión actual"]:::error
+  C -->|"Sí"| C2["Reabrir con motivo<br/>SUP o ADM"]:::pin
+  C2 --> OKC(["Caja ABIERTA de nuevo"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

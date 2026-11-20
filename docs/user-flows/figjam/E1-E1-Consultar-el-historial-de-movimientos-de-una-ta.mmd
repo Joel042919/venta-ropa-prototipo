@@ -1,0 +1,19 @@
+flowchart TD
+  S(["Historial de movimientos"]):::persona --> A("Elige la talla y color<br/>y los filtros"):::persona
+  A --> B{"¿Tiene movimientos?"}:::decision
+  B -->|"No"| B1["Aún no tiene movimientos"]:::error
+  B -->|"Sí"| C["Línea de tiempo:<br/>fecha, tipo, documento,<br/>entrada, salida y saldo"]:::sistema
+  C --> D{"¿El saldo del historial de movimientos<br/>es igual al stock actual?"}:::decision
+  D -->|"Sí"| D1["Chip verde: coincide"]:::ok
+  D -->|"No"| D2["Chip de alerta:<br/>diferencia de N unidades"]:::error
+  D2 --> D3["Guía hacia un ajuste<br/>de corrección con motivo"]:::pin
+  C --> E("Clic en un documento"):::persona
+  E --> E1{"¿El documento se puede abrir?"}:::decision
+  E1 -->|"Sí"| E2(["Abre la venta o la compra"]):::ok
+  E1 -->|"No"| E3["Etiqueta Documento no disponible"]:::error
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

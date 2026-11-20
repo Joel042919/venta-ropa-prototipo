@@ -1,0 +1,18 @@
+flowchart TD
+  T(("Quiere saber si todo va bien")):::disp --> P1["Resumen del día<br/>solo lo que requiere acción"]:::pant
+  P1 --> D1{"¿Hay algo en rojo?"}:::dec
+  D1 -->|"No"| OK1(["Tranquila: todo en orden"]):::logro
+  D1 -->|"Comprobantes sin enviar"| A1["Bandeja de comprobantes<br/>reenvía o corrige"]:::pant
+  D1 -->|"Stock bajo"| A2["Por reponer<br/>crea la compra"]:::pant
+  D1 -->|"Caja con diferencia"| A3["Revisa el cierre<br/>y la observación"]:::pant
+  D1 -->|"Pedidos atrasados"| A4["Pedidos<br/>contacta al courier o al cliente"]:::pant
+  A1 --> OK2(["Problema resuelto o delegado"]):::logro
+  A2 --> OK2
+  A3 --> OK2
+  A4 --> OK2
+classDef disp fill:#292524,stroke:#292524,color:#ffffff,stroke-width:1.5px;
+classDef pant fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef dec fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef sup fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;
+classDef rec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef logro fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;

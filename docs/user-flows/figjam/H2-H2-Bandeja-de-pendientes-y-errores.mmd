@@ -1,0 +1,19 @@
+flowchart TD
+  S(["Bandeja de comprobantes"]):::persona --> A["Lista con estado, cliente,<br/>total y días transcurridos"]:::sistema
+  A --> B{"¿Se acerca el plazo<br/>de envío?"}:::decision
+  B -->|"Sí"| B1["Se resalta en rojo"]:::error
+  B -->|"No"| C
+  B1 --> C("Reenviar uno<br/>o todos los pendientes"):::persona
+  C --> D["Progreso y resultado por fila"]:::sistema
+  D --> E{"¿Fue aceptado?"}:::decision
+  E -->|"Sí"| OK(["Sale de la bandeja"]):::ok
+  E -->|"No"| F["Conserva el motivo más reciente"]:::error
+  F --> G{"¿Rechazado?"}:::decision
+  G -->|"Sí"| G1["Corregir y reenviar H3"]:::sistema
+  G -->|"No"| G2["Sigue en reintento automático<br/>Último intento hace N min"]:::sistema
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

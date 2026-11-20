@@ -1,0 +1,35 @@
+flowchart TD
+  S(["Entra al punto de venta"]):::persona --> A{"¿Tiene sesión<br/>abierta propia?"}:::decision
+  A -->|"Sí"| PV(["Continúa en el punto de venta"]):::ok
+  A -->|"No"| B{"¿Hay una sesión abierta<br/>de un día anterior?"}:::decision
+  B -->|"Sí"| B5["Regularizar primero B5"]:::error
+  B -->|"No"| C["Pantalla Abrir caja"]:::sistema
+  C --> D("Elige la caja"):::persona
+  D --> E{"¿La caja está libre?"}:::decision
+  E -->|"No"| E1["En uso por otra persona<br/>elegir otra o avisar a SUP"]:::error
+  E1 --> D
+  E -->|"Sí"| F{"¿Tiene serie de boleta?"}:::decision
+  F -->|"No"| F1["Bloquea con el motivo<br/>y enlace a ADM"]:::error
+  F -->|"Sí"| G["Turno sugerido por la hora"]:::sistema
+  G --> G1{"¿Fuera del horario<br/>del turno?"}:::decision
+  G1 -->|"Sí"| G2["Aviso suave"]:::sistema
+  G2 --> H
+  G1 -->|"No"| H("Escribe el monto de apertura"):::persona
+  H --> I{"¿Monto válido?"}:::decision
+  I -->|"No"| I1["Error junto al campo"]:::error
+  I1 --> H
+  I -->|"Es 0"| I2["¿Abrir sin dinero para vuelto?"]:::decision
+  I2 --> J
+  I -->|"Sí"| J{"¿Difiere de lo que dejó<br/>el turno anterior?"}:::decision
+  J -->|"Sí"| J1["Pide observación"]:::sistema
+  J1 --> K
+  J -->|"No"| K{"¿Hay conexión?"}:::decision
+  K -->|"No"| K1["Necesitas conexión para abrir"]:::error
+  K -->|"Sí"| L["Crea la sesión abierta"]:::sistema
+  L --> OK(["Caja abierta<br/>entra al punto de venta"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

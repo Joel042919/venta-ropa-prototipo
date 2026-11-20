@@ -1,0 +1,14 @@
+flowchart LR
+  I(["Cajera: Armar la venta de la clienta en menos de 30 segundos."]):::ini --> N1
+  N1["1. Punto de venta<br/>Escaneas la etiqueta o buscas la prenda"]:::paso
+  N1 --> N2
+  N2["2. Talla y color<br/>Eliges talla y color (solo si hay varias)"]:::paso
+  N2 --> N3
+  N3["3. Venta actual<br/>Revisas prendas y cantidades"]:::paso
+  N3 --> N4
+  N4["4. Cliente y comprobante<br/>Normalmente nada: ya viene Boleta y Clientes varios"]:::paso
+  N4 --> N5
+  N5["5. Cobrar<br/>Pulsas «Cobrar»"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

@@ -1,0 +1,22 @@
+flowchart TD
+  S(["Usuarios"]):::persona --> Q{"¿Qué quiere hacer?"}:::decision
+  Q -->|"Crear"| C["Formulario: usuario, rol,<br/>sede y contraseña temporal"]:::persona
+  C --> U{"¿Usuario ya existe?"}:::decision
+  U -->|"Sí"| X1["Sugiere tallas y colores"]:::error
+  X1 --> C
+  U -->|"No"| G["Guarda y muestra la temporal<br/>una sola vez"]:::sistema
+  G --> OK1(["Usuario creado"]):::ok
+  Q -->|"Desactivar"| D{"¿Es el último ADM<br/>o es uno mismo?"}:::decision
+  D -->|"Sí"| X2["Bloqueado con explicación"]:::error
+  D -->|"No"| K{"¿Tiene caja abierta?"}:::decision
+  K -->|"Sí"| F["cierre hecho por el supervisor por SUP primero B3"]:::pin
+  F --> OK2
+  K -->|"No"| OK2(["Usuario desactivado<br/>el historial se conserva"]):::ok
+  Q -->|"Restablecer contraseña"| R["Genera temporal con motivo"]:::sistema
+  R --> OK3(["Pedirá cambiarla al ingresar"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

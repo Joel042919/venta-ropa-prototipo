@@ -1,0 +1,24 @@
+flowchart TD
+  S(["Confirma el cobro"]):::persona --> A["Barra de progreso:<br/>Firmando, Enviando, Listo"]:::sistema
+  A --> B{"¿Resultado?"}:::decision
+  B -->|"Aceptado"| C(["Pantalla de éxito:<br/>número, total y vuelto grande"]):::ok
+  B -->|"Tarda más de 10 s"| D(["Venta registrada<br/>se envía en segundo plano"]):::ok
+  B -->|"Rechazado"| E["Aviso: no fue aceptado<br/>ver motivo en la bandeja H3"]:::error
+  B -->|"Sin conexión"| F["Modo sin conexión H6"]:::error
+  C --> G{"¿Qué elige?"}:::decision
+  D --> G
+  G -->|"Imprimir"| H{"¿Imprime?"}:::decision
+  H -->|"No"| H1["Reintentar, ver PDF<br/>o enviar por WhatsApp"]:::error
+  H -->|"Sí"| OK
+  G -->|"WhatsApp"| W{"¿Tiene teléfono<br/>y el PDF está listo?"}:::decision
+  W -->|"No"| W1["Pide el número o espera Generando"]:::sistema
+  W1 --> OK
+  W -->|"Sí"| OK
+  G -->|"Correo"| OK
+  OK(["Nueva venta"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

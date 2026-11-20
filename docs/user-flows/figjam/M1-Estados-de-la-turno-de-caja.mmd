@@ -1,0 +1,16 @@
+stateDiagram-v2
+    state "Sin turno de caja" as Sin
+    state "Abierta" as Ab
+    state "Cerrando" as En
+    state "Cerrada" as Ce
+    state "Cerrada por el supervisor" as Fo
+    [*] --> Sin
+    Sin --> Ab: Abre la caja
+    Ab --> Ab: Ventas y movimientos
+    Ab --> En: Cerrar caja
+    En --> Ab: Cancela el cierre
+    En --> Ce: Confirma el conteo
+    En --> Fo: Cierra el supervisor
+    Ce --> Ab: Reabre el supervisor
+    Ce --> [*]
+    Fo --> [*]

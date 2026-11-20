@@ -1,0 +1,28 @@
+flowchart TD
+  S(["Nuevo producto"]):::persona --> A("Datos: nombre, código base,<br/>categoría"):::persona
+  A --> B{"¿código base repetido?"}:::decision
+  B -->|"Sí"| B1["Sugiere el siguiente"]:::error
+  B1 --> A
+  B -->|"No"| C("Elige tallas y colores"):::persona
+  C --> D{"¿Existen la talla<br/>o el color?"}:::decision
+  D -->|"No"| D1["Crear en línea sin salir"]:::sistema
+  D1 --> E
+  D -->|"Sí"| E["Genera la tabla de tallas y colores"]:::sistema
+  E --> F("Precio, costo, stock inicial<br/>y stock mínimo"):::persona
+  F --> G{"¿Precio o costo en 0?"}:::decision
+  G -->|"Sí"| G1["Bloquea el guardado"]:::error
+  G1 --> F
+  G -->|"No"| H{"¿Precio menor que el costo?"}:::decision
+  H -->|"Sí"| H1["Aviso de margen negativo<br/>requiere confirmar"]:::sistema
+  H1 --> I
+  H -->|"No"| I["Revisión: tallas y colores, stock total, margen"]:::sistema
+  I --> J{"¿Hay conexión?"}:::decision
+  J -->|"No"| J1["Conserva el borrador"]:::error
+  J -->|"Sí"| K["Crea producto, tallas y colores,<br/>stock y historial de movimientos inicial"]:::sistema
+  K --> OK(["Imprimir etiquetas,<br/>crear otro igual o ir al inventario"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

@@ -1,0 +1,24 @@
+flowchart TD
+  S(["Carrito"]):::persona --> Q{"¿Qué hace?"}:::decision
+  Q -->|"Cambiar cantidad"| A{"¿Supera el stock?"}:::decision
+  A -->|"Sí"| A1["Límite visible: solo quedan N"]:::error
+  A -->|"No"| A2(["Cantidad actualizada"]):::ok
+  Q -->|"Quitar prenda"| B["Se quita<br/>Deshacer por 6 segundos"]:::sistema
+  Q -->|"Vaciar"| C["Pide confirmación"]:::sistema
+  Q -->|"Cambiar precio de una línea"| D["clave del supervisor y motivo"]:::pin
+  Q -->|"Aplicar descuento"| E{"¿Supera el límite del rol?"}:::decision
+  E -->|"Sí"| E1["clave del supervisor o administrador"]:::pin
+  E1 --> F
+  E -->|"No"| F{"¿Es el 100 por ciento?"}:::decision
+  F -->|"Sí"| F1["Bloqueado: la cortesía<br/>la registra SUP con motivo"]:::error
+  F -->|"No"| G["Recalcula<br/>Subtotal, Descuento y Total"]:::sistema
+  G --> H{"¿Hay packs en el carrito?"}:::decision
+  H -->|"Sí"| H1["El descuento no se acumula<br/>con el precio del pack"]:::sistema
+  H1 --> OK
+  H -->|"No"| OK(["Total a cobrar actualizado<br/>incluye IGV"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

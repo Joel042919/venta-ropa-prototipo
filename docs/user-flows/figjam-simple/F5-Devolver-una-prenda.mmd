@@ -1,0 +1,16 @@
+flowchart LR
+  I(["Cajera: Devolver el dinero y reponer el stock."]):::ini --> N1
+  N1["1. Devoluciones<br/>Buscas la venta"]:::paso
+  N1 --> N2
+  N2["2. Prendas<br/>Marcas qué prendas y cuántas devuelve"]:::paso
+  N2 --> N3
+  N3["3. Motivo y estado<br/>Eliges el motivo y cómo está la prenda"]:::paso
+  N3 --> N4
+  N4["4. Reembolso<br/>Eliges cómo devolver el dinero"]:::paso
+  N4 --> N5
+  N5["5. Confirmar<br/>Pulsas «Confirmar» (clave del supervisor si lo pide)"]:::paso
+  N5 --> N6
+  N6["6. Listo<br/>Imprimes la nota"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

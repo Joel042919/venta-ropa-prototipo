@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgaShop · Flujos de usuario simples</title>
+<style>
+  :root{--bg:#faf8f5;--card:#fff;--ink:#292524;--muted:#57534e;--line:#e7ddd2;--brand:#c26d60;--brand-text:#9a4a40;--soft:#fbeeea}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+  header{padding:30px 0 10px}
+  h1{font:700 30px Georgia,serif;margin:0 0 6px}
+  .lead{color:var(--muted);margin:0 0 18px;max-width:780px}
+  .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+  .box h2{font:700 18px Georgia,serif;margin:0 0 8px}
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:0;padding:0;list-style:none}
+  .principles li{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:14px}
+  .principles b{display:block;color:var(--brand-text)}
+  .how{display:flex;flex-wrap:wrap;gap:14px 22px;font-size:14px;color:var(--muted)}
+  .how span{display:inline-flex;align-items:center;gap:8px}
+  .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .day{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;margin:6px 0}
+  .day b{min-width:150px}
+  .chip{background:#f1ebe4;border-radius:999px;padding:5px 12px;font-weight:600;color:var(--ink);text-decoration:none}
+  .chip:hover{background:var(--brand);color:#fff}
+  .arrow{color:var(--muted)}
+  nav.tabs{position:sticky;top:0;z-index:10;background:rgba(250,248,245,.96);border-bottom:1px solid var(--line);padding:10px 0}
+  nav.tabs .in{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:600 14px system-ui;cursor:pointer;min-height:40px}
+  .tab[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+  main{padding:18px 0 80px;display:grid;gap:22px}
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .flow-h{padding:16px 18px;border-bottom:1px solid var(--line);background:#fdfaf7}
+  .flow-h .who{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--brand-text);background:var(--soft);padding:2px 10px;border-radius:999px}
+  .flow-h h2{font:700 22px Georgia,serif;margin:6px 0 2px}
+  .goal{color:var(--muted);margin:0}
+  .goal b{color:var(--ink)}
+  .steps{display:flex;flex-wrap:wrap;gap:10px 6px;padding:18px;align-items:stretch}
+  .step{width:178px;border:1.5px solid #c7d2fe;background:#eef2ff;border-radius:14px;padding:10px 12px;position:relative}
+  .step .n{position:absolute;top:-10px;left:-6px;width:26px;height:26px;border-radius:50%;background:#4f46e5;color:#fff;display:grid;place-items:center;font:700 13px system-ui}
+  .step .scr{font:700 14px Georgia,serif;margin:2px 0 6px;color:#1e1b4b}
+  .step .do{font-size:13.5px;margin:0 0 6px}
+  .step .see{font-size:12.5px;color:var(--muted);border-top:1px dashed #c7d2fe;padding-top:6px;margin:0}
+  .step .see::before{content:"Ves: ";font-weight:700;color:var(--ink)}
+  .step.end{background:#dcfce7;border-color:#86efac}
+  .step.end .n{background:#16a34a}
+  .step.end .scr{color:#14532d}
+  .step.end .see{border-color:#86efac}
+  .arr{align-self:center;color:#a8a29e;font-size:22px}
+  .more{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;padding:0 18px 18px}
+  .more .col{border-radius:12px;padding:12px 14px;font-size:14px}
+  .more h3{margin:0 0 6px;font:700 14px system-ui}
+  .more ul{margin:0;padding-left:18px}
+  .more li{margin:3px 0}
+  .dec{background:#fef3c7}.dec h3{color:#78350f}
+  .bad{background:#fee2e2}.bad h3{color:#7f1d1d}
+  .pill{font-size:12px;color:var(--muted);margin-left:8px}
+  footer{padding:0 0 40px;color:var(--muted);font-size:14px}
+  @media (max-width:640px){.step{width:100%}.arr{display:none}}
+  @media print{nav.tabs{display:none}.flow{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>AgaShop · Flujos de usuario simples</h1>
+  <p class="lead">Cada flujo tiene <b>un solo objetivo</b> y cuenta el <b>camino normal</b> paso a paso, desde lo que hace la persona. Lo raro (errores, excepciones) está aparte, debajo de cada flujo. El detalle completo sigue en los documentos de texto.</p>
+
+  <div class="box">
+    <h2>Los principios de UX que se aplicaron</h2>
+    <ul class="principles">
+      <li><b>1. Un objetivo por flujo</b>Cada flujo responde a una sola pregunta: "¿cómo hago X?"</li>
+      <li><b>2. Desde la persona</b>Los pasos dicen lo que tú haces y ves, no lo que hace el sistema.</li>
+      <li><b>3. Camino normal primero</b>Las excepciones no ensucian el recorrido: van en "Si algo sale mal".</li>
+      <li><b>4. Máximo 6 pasos</b>Más de eso cansa y confunde (carga cognitiva).</li>
+      <li><b>5. Un paso = una pantalla = una acción</b>Nunca se piden dos cosas a la vez.</li>
+      <li><b>6. Menos decisiones</b>Todo viene con una opción sugerida: boleta, total exacto, turno de la hora.</li>
+      <li><b>7. Siempre sabes dónde estás</b>Cada paso muestra qué verás al terminar.</li>
+      <li><b>8. Prevenir antes que corregir</b>Se avisa antes del error (stock, duplicados, montos), no después.</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>Cómo leer cada flujo</h2>
+    <div class="how">
+      <span><i class="dot" style="background:#eef2ff;border:1.5px solid #c7d2fe"></i>Un paso que haces tú, con la pantalla donde estás</span>
+      <span><i class="dot" style="background:#dcfce7;border:1.5px solid #86efac"></i>El resultado final</span>
+      <span><i class="dot" style="background:#fef3c7"></i>Decisiones del camino (pocas)</span>
+      <span><i class="dot" style="background:#fee2e2"></i>Si algo sale mal</span>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>Un día en la tienda</h2>
+    <div class="day"><b>Cajera o cajero</b><a class="chip" href="#F1">1 Empezar el día</a><span class="arrow">→</span><a class="chip" href="#F2">2 Vender</a><span class="arrow">→</span><a class="chip" href="#F3">3 Cobrar</a><span class="arrow">→</span><a class="chip" href="#F4">4 Cambiar</a> <a class="chip" href="#F5">5 Devolver</a><span class="arrow">→</span><a class="chip" href="#F6">6 Cerrar caja</a></div>
+    <div class="day"><b>Supervisor/a</b><a class="chip" href="#F7">7 Recibir mercadería</a> <a class="chip" href="#F8">8 Crear producto</a> <a class="chip" href="#F9">9 Ajustar stock</a> <a class="chip" href="#F10">10 Revisar historial de movimientos</a> <a class="chip" href="#F11">11 Corregir comprobante</a> <a class="chip" href="#F12">12 Pedido con envío</a></div>
+    <div class="day"><b>Administrador/a</b><a class="chip" href="#F13">13 Configurar la tienda</a> <a class="chip" href="#F14">14 Registrar cliente</a></div>
+  </div>
+</header>
+
+<nav class="tabs"><div class="in" id="tabs"></div></nav>
+<main id="main"></main>
+<footer>Los umbrales (plazos, montos y límites) son propuestas. Las reglas de SUNAT se deben validar con tu contador. Más detalle en <code>docs/user-flows/</code>.</footer>
+</div>
+
+<script>
+/* Cada flujo: quién, objetivo, pasos (pantalla, haces, ves), decisiones y problemas. El último paso es el resultado. */
+const FLOWS=[
+{id:'F1',who:'Cajera',title:'Empezar el día: abrir la caja',goal:'Dejar la caja lista para vender.',
+ steps:[
+  {s:'Inicio de sesión',h:'Escribes tu usuario y contraseña',v:'Tu nombre y la sede'},
+  {s:'Abrir caja',h:'Eliges tu caja',v:'Solo las cajas libres'},
+  {s:'Fondo de caja',h:'Escribes el dinero para dar vuelto',v:'El monto en grande'},
+  {s:'Confirmar',h:'Pulsas «Abrir caja»',v:'«Caja 01 abierta · Dinero para vuelto S/ 100»'},
+  {s:'Listo para vender',h:'—',v:'El punto de venta con el cursor en el buscador',end:1}],
+ dec:['Si el turno no es el de esta hora, se sugiere el correcto y puedes cambiarlo.','Si el dinero para vuelto es distinto al que dejó el turno anterior, escribes una observación.'],
+ bad:['Olvidaste cerrar la caja de ayer: primero debes cerrarla.','Otra persona ya usa esa caja: eliges otra.','Tu usuario está desactivado: habla con tu supervisor.','Sin internet: no se puede abrir.']},
+
+{id:'F2',who:'Cajera',title:'Vender una prenda',goal:'Armar la venta de la clienta en menos de 30 segundos.',
+ steps:[
+  {s:'Punto de venta',h:'Escaneas la etiqueta o buscas la prenda',v:'La prenda en «Venta actual»'},
+  {s:'Talla y color',h:'Eliges talla y color (solo si hay varias)',v:'Solo lo que hay en stock'},
+  {s:'Venta actual',h:'Revisas prendas y cantidades',v:'El total siempre visible'},
+  {s:'Cliente y comprobante',h:'Normalmente nada: ya viene Boleta y Clientes varios',v:'El tipo elegido'},
+  {s:'Cobrar',h:'Pulsas «Cobrar»',v:'Se abre el cobro',end:1}],
+ dec:['Si la clienta pide factura, buscas su RUC.','Si quieres dar un descuento, eliges 5, 10 o 15 %.'],
+ bad:['La prenda está agotada: te avisa y te muestra otras sedes.','Quedan menos prendas de las que pides: se limita a lo disponible.','El descuento supera tu límite: pide el clave de tu supervisor.','El precio cambió mientras vendías: te avisa antes de cobrar.']},
+
+{id:'F3',who:'Cajera',title:'Cobrar y entregar el comprobante',goal:'Recibir el dinero y dar el ticket a la clienta.',
+ steps:[
+  {s:'Cobro',h:'Eliges cómo paga: efectivo, Yape o Plin, tarjeta',v:'El total en grande'},
+  {s:'Monto',h:'Efectivo: escribes lo recibido o pulsas «Exacto». Digital: número de operación',v:'El vuelto a entregar'},
+  {s:'Confirmar',h:'Pulsas «Confirmar»',v:'Firmando, Enviando, Listo'},
+  {s:'Venta registrada',h:'Imprimes, envías por WhatsApp o correo',v:'El número del comprobante'},
+  {s:'Nueva venta',h:'—',v:'El buscador vacío, listo para la siguiente',end:1}],
+ dec:['Si la clienta paga con dos medios, pulsas «Agregar otro medio» y el sistema pone lo que falta.'],
+ bad:['Falta dinero: «Confirmar» queda bloqueado y dice cuánto falta.','El Yape no llega: esperas o cambias de medio.','No hay efectivo para el vuelto: pide un billete menor.','SUNAT demora: la venta queda registrada y se envía sola.','Se cae el internet al confirmar: el sistema comprueba antes de repetir; nunca duplica.','La impresora falla: reintentas, ves el PDF o lo envías por WhatsApp.']},
+
+{id:'F4',who:'Cajera',title:'Cambiar una prenda por otra talla o color',goal:'Darle a la clienta la prenda correcta sin perder el control de stock y de caja.',
+ steps:[
+  {s:'Devoluciones',h:'Buscas la venta: número, QR del ticket o DNI',v:'La venta con sus prendas'},
+  {s:'Prenda a cambiar',h:'Pulsas «Cambiar» en la prenda',v:'Los días desde la compra'},
+  {s:'Prenda nueva',h:'Escaneas o buscas la nueva',v:'El stock por talla y color'},
+  {s:'Diferencia',h:'Revisas: mismo precio, debe pagar o se devuelve',v:'El monto, claro'},
+  {s:'Confirmar',h:'Pulsas «Confirmar» (clave del supervisor si lo pide)',v:'Todo registrado de una vez'},
+  {s:'Listo',h:'Imprimes los comprobantes',v:'El cambio hecho',end:1}],
+ dec:['Si la clienta debe pagar la diferencia, se abre el cobro normal.'],
+ bad:['La talla nueva no está: otra talla y color, otra sede o devolución simple.','Pasó el plazo: solo tu supervisor puede aprobarlo.','Sin ticket: solo cambio, nunca dinero (tu supervisor decide).','El precio de hoy es menor al que pagó: se cambia por el valor pagado.']},
+
+{id:'F5',who:'Cajera',title:'Devolver una prenda',goal:'Devolver el dinero y reponer el stock.',
+ steps:[
+  {s:'Devoluciones',h:'Buscas la venta',v:'La venta con sus prendas y pagos'},
+  {s:'Prendas',h:'Marcas qué prendas y cuántas devuelve',v:'El monto, con el descuento incluido'},
+  {s:'Motivo y estado',h:'Eliges el motivo y cómo está la prenda',v:'Vuelve a stock, dañada o en revisión'},
+  {s:'Reembolso',h:'Eliges cómo devolver el dinero',v:'El medio de pago original sugerido'},
+  {s:'Confirmar',h:'Pulsas «Confirmar» (clave del supervisor si lo pide)',v:'Nota de crédito emitida'},
+  {s:'Listo',h:'Imprimes la nota',v:'Dinero y stock actualizados',end:1}],
+ dec:['Si pagó con Yape o tarjeta, la devolución va por el mismo medio, sin tocar el efectivo.'],
+ bad:['Fuera de plazo: solo tu supervisor.','No hay suficiente efectivo para devolver: eliges otro medio.','Ya devolvió antes parte de la venta: solo puedes devolver lo que queda.','La venta aún no fue aceptada por SUNAT: primero debe aceptarse.']},
+
+{id:'F6',who:'Cajera',title:'Cerrar la caja',goal:'Contar el efectivo y cerrar el turno.',
+ steps:[
+  {s:'Cerrar caja',h:'Pulsas «Cerrar caja»',v:'Una lista de pendientes, si hay'},
+  {s:'Resumen',h:'Revisas las ventas del turno',v:'Por medio de pago, sin el efectivo esperado'},
+  {s:'Conteo',h:'Cuentas billetes y monedas',v:'La suma en vivo'},
+  {s:'Diferencia',h:'Confirmas el total contado',v:'«Cuadra», «Sobra» o «Falta»'},
+  {s:'Cierre',h:'Pulsas «Cerrar»',v:'El reporte de cierre',end:1}],
+ dec:['Si hay diferencia, escribes qué crees que pasó.','Si quieres dejar el efectivo seguro, registras un retiro a la caja fuerte.'],
+ bad:['Hay ventas en espera: deben cobrarse o descartarse primero.','Sin internet: tu conteo se guarda y el cierre se completa al volver.','La diferencia es grande: pide el clave de tu supervisor.','Te fuiste sin cerrar: tu supervisor hace un cierre hecho por el supervisor.']},
+
+{id:'F7',who:'Supervisor/a',title:'Recibir mercadería (registrar una compra)',goal:'Subir el stock con el costo correcto.',
+ steps:[
+  {s:'Compras',h:'Pulsas «Nueva compra»',v:'El formulario del documento'},
+  {s:'Proveedor',h:'Escribes el RUC',v:'El nombre completado solo'},
+  {s:'Documento',h:'Escribes tipo, serie, número y fecha',v:'Te avisa si ya existe'},
+  {s:'Prendas',h:'Escaneas o buscas y pones cantidad y costo',v:'Subtotal, IGV y total'},
+  {s:'Verificar',h:'Comparas con el total del documento',v:'Deben coincidir'},
+  {s:'Registrar',h:'Pulsas «Registrar compra»',v:'El stock sube; te pregunta si actualizas costos',end:1}],
+ dec:['Si llegan muchas tallas y colores, usas el modo tabla de tallas y colores.','Si la prenda aún no existe, la creas ahí mismo sin salir.'],
+ bad:['Compra duplicada: te lleva a la existente.','El total no coincide: no deja registrar hasta explicarlo.','Fecha futura: se bloquea.','Se corta la conexión: se conserva el borrador.']},
+
+{id:'F8',who:'Supervisor/a',title:'Crear un producto nuevo',goal:'Dejar la prenda lista para vender, con todas sus tallas y colores.',
+ steps:[
+  {s:'Productos',h:'Pulsas «Nuevo producto»',v:'El formulario en 3 pasos'},
+  {s:'Datos',h:'Escribes nombre y eliges categoría',v:'Un código sugerido'},
+  {s:'Tallas y colores',h:'Eliges tallas y colores',v:'La tabla de tallas y colores'},
+  {s:'Precios y stock',h:'Escribes precio, costo y stock',v:'El margen de cada talla y color'},
+  {s:'Revisar',h:'Confirmas el resumen',v:'Tallas y colores, stock total y margen'},
+  {s:'Guardar',h:'Pulsas «Guardar»',v:'Opción de imprimir etiquetas',end:1}],
+ dec:['Si no tiene talla ni color, eliges «Sin tallas y colores».'],
+ bad:['El código ya existe: te sugiere el siguiente.','El precio es menor al costo: te avisa del margen negativo.','La talla o el color no existen: los creas ahí mismo.','Sales sin guardar: se conserva el borrador.']},
+
+{id:'F9',who:'Supervisor/a',title:'Ajustar el stock',goal:'Corregir el stock de una prenda dejando el motivo.',
+ steps:[
+  {s:'Inventario',h:'Buscas o escaneas la prenda',v:'Su stock actual por talla y color'},
+  {s:'Ajustar',h:'Eliges Entrada o Salida y la cantidad',v:'«Pasará de 5 a 8»'},
+  {s:'Motivo',h:'Eliges el motivo',v:'Una lista corta'},
+  {s:'Guardar',h:'Pulsas «Guardar»',v:'El stock cambia y queda en el historial de movimientos',end:1}],
+ dec:['Si son muchas prendas, usas «Contar inventario»: escaneas todo y revisas las diferencias.','Si es un ingreso del proveedor, el sistema te lleva a Compras.'],
+ bad:['La salida es mayor al stock: se bloquea.','Alguien vendió mientras ajustabas: te muestra el stock nuevo.']},
+
+{id:'F10',who:'Supervisor/a',title:'Revisar el historial de movimientos de una prenda',goal:'Entender qué pasó con el stock.',
+ steps:[
+  {s:'Historial de movimientos',h:'Eliges la prenda',v:'Sus movimientos'},
+  {s:'Filtros',h:'Eliges fechas o tipo de movimiento',v:'La lista filtrada'},
+  {s:'Línea de tiempo',h:'Lees entradas, salidas y saldo',v:'«Saldo = stock actual»'},
+  {s:'Documento',h:'Pulsas un movimiento',v:'Abre la venta o la compra',end:1}],
+ dec:[],
+ bad:['El saldo no coincide con el stock: aparece una alerta y te guía a un ajuste con motivo.','No hay movimientos: te lo dice.']},
+
+{id:'F11',who:'Supervisor/a',title:'Corregir o anular un comprobante',goal:'Arreglar un comprobante sin romper el stock ni la caja.',
+ steps:[
+  {s:'Comprobantes',h:'Buscas el comprobante',v:'Su estado: aceptado, en proceso o no aceptado'},
+  {s:'¿Qué pasó?',h:'Eliges la situación',v:'El camino correcto'},
+  {s:'Motivo',h:'Escribes el motivo y pones tu clave',v:'El efecto en stock y caja'},
+  {s:'Confirmar',h:'Pulsas «Confirmar»',v:'Se actualizan comprobante, stock y caja',end:1}],
+ dec:['Si fue «no aceptado» por un dato: lo corriges y lo reenvías.','Si la clienta pidió factura después de la boleta: se anula y se emite la factura con las mismas prendas.'],
+ bad:['El comprobante sigue «en proceso»: primero debe aceptarse.','Sin conexión: no se puede anular.','Era de un turno ya cerrado: el efecto de caja va a la sesión actual.']},
+
+{id:'F12',who:'Supervisor/a',title:'Atender un pedido con delivery',goal:'Llevar la prenda a la clienta y saber en qué paso va.',
+ steps:[
+  {s:'Venta con envío',h:'Activas «Envío» y escribes dirección y costo',v:'Productos + Envío = Total'},
+  {s:'Cobro',h:'Eliges pagar ahora o contra entrega',v:'El pedido en «Pendiente»'},
+  {s:'Preparar',h:'Escaneas cada prenda del pedido',v:'El lista de verificación completo'},
+  {s:'Enviar',h:'Pones courier y guía y marcas «En camino»',v:'Aviso a la clienta (opcional)'},
+  {s:'Entrega',h:'Marcas «Entregado»',v:'La fecha real de entrega',end:1}],
+ dec:['Si es contra entrega, el repartidor rinde el dinero después y tú lo registras.'],
+ bad:['La entrega falla: reprogramas o devuelves a tienda.','Falta una prenda al preparar: cambias la prenda o la quitas del pedido.','Cancelas el pedido: el stock vuelve y se devuelve el dinero.','El repartidor no rindió el efectivo: aparece como «por rendir».']},
+
+{id:'F13',who:'Administrador/a',title:'Configurar una tienda nueva',goal:'Dejar la tienda lista para vender.',
+ steps:[
+  {s:'Empresa y sede',h:'Escribes razón social, RUC y dirección',v:'El IGV de la sede'},
+  {s:'Cajas y series',h:'Creas las cajas y su serie de boleta y factura',v:'La serie asignada'},
+  {s:'Turnos',h:'Defines los horarios',v:'Mañana, tarde, noche'},
+  {s:'Medios de pago',h:'Activas efectivo, Yape, Plin, tarjeta',v:'Lo que verá la cajera al cobrar'},
+  {s:'Usuarios',h:'Creas a tu equipo con su rol',v:'Una clave temporal'},
+  {s:'Tienda lista',h:'—',v:'«Lista para vender»',end:1}],
+ dec:[],
+ bad:['Falta algún mínimo (caja, serie, efectivo, turno): el punto de venta no abre y te dice qué falta.','La serie ya existe: te sugiere otra.','El RUC es inválido: error junto al campo.','Abandonas a medias: se guarda el avance.']},
+
+{id:'F14',who:'Administrador/a',title:'Registrar un cliente',goal:'Tener los datos para emitir una boleta o factura.',
+ steps:[
+  {s:'Clientes',h:'Pulsas «Nuevo cliente»',v:'Un formulario corto'},
+  {s:'Documento',h:'Eliges DNI o RUC y lo escribes',v:'Se valida el formato'},
+  {s:'Validar',h:'Pulsas «Validar»',v:'Nombre y dirección completados'},
+  {s:'Contacto',h:'Escribes teléfono (opcional)',v:'—'},
+  {s:'Guardar',h:'Pulsas «Guardar»',v:'El cliente listo para la venta',end:1}],
+ dec:[],
+ bad:['El documento ya existe: te lleva a la ficha existente.','La validación no responde: lo completas a mano y queda «Sin validar».','RUC de baja o no habido: aviso fuerte antes de facturar.']}
+];
+
+const tabs=document.getElementById('tabs'),main=document.getElementById('main');
+const WHOS=['Todos','Cajera','Supervisor/a','Administrador/a'];
+let cur='Todos';
+WHOS.forEach(w=>{const b=document.createElement('button');b.className='tab';b.type='button';b.textContent=w==='Todos'?'Todos ('+FLOWS.length+')':w+' ('+FLOWS.filter(f=>f.who===w).length+')';b.setAttribute('aria-pressed',w===cur);b.onclick=()=>{cur=w;[...tabs.children].forEach(t=>t.setAttribute('aria-pressed',t===b));document.querySelectorAll('.flow').forEach(f=>f.style.display=(cur==='Todos'||f.dataset.who===cur)?'':'none')};tabs.appendChild(b)});
+
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+FLOWS.forEach(f=>{
+  const sec=document.createElement('section');sec.className='flow';sec.id=f.id;sec.dataset.who=f.who;
+  let html='<div class="flow-h"><span class="who">'+esc(f.who)+'</span><h2>'+esc(f.id.replace('F',''))+' · '+esc(f.title)+'</h2><p class="goal"><b>Objetivo:</b> '+esc(f.goal)+'</p></div><div class="steps">';
+  f.steps.forEach((s,i)=>{
+    html+='<div class="step'+(s.end?' end':'')+'"><span class="n">'+(i+1)+'</span><div class="scr">'+esc(s.s)+'</div><p class="do">'+esc(s.h)+'</p><p class="see">'+esc(s.v)+'</p></div>';
+    if(i<f.steps.length-1)html+='<span class="arr" aria-hidden="true">→</span>';
+  });
+  html+='</div><div class="more">';
+  if(f.dec.length)html+='<div class="col dec"><h3>Decisiones en el camino</h3><ul>'+f.dec.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+  if(f.bad.length)html+='<div class="col bad"><h3>Si algo sale mal</h3><ul>'+f.bad.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+  html+='</div>';
+  sec.innerHTML=html;main.appendChild(sec);
+});
+window.FLOWS=FLOWS;
+</script>
+</body>
+</html>

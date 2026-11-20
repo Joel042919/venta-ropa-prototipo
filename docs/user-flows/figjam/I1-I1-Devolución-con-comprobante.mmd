@@ -1,0 +1,28 @@
+flowchart TD
+  S(["Devoluciones"]):::persona --> A("Busca la venta:<br/>número, QR, documento o fecha"):::persona
+  A --> B{"¿La encontró?"}:::decision
+  B -->|"No"| B1["Buscar por cliente,<br/>fecha y monto"]:::sistema
+  B1 --> A
+  B -->|"Sí"| C["Muestra líneas, pagos<br/>y días transcurridos"]:::sistema
+  C --> D{"¿Dentro del plazo?"}:::decision
+  D -->|"No"| D1["Solo SUP con motivo"]:::pin
+  D1 --> E
+  D -->|"Sí"| E("Elige líneas y cantidades<br/>y el motivo"):::persona
+  E --> F{"¿Cantidad mayor<br/>a la comprada o ya devuelta?"}:::decision
+  F -->|"Sí"| F1["No se permite"]:::error
+  F1 --> E
+  F -->|"No"| G("Condición de cada prenda:<br/>reingresa, dañada o en revisión"):::persona
+  G --> H["Calcula el monto con el descuento repartido"]:::sistema
+  H --> I("Elige el medio de reembolso"):::persona
+  I --> J{"¿Reembolso en efectivo<br/>mayor al efectivo de caja?"}:::decision
+  J -->|"Sí"| J1["Elegir otro medio"]:::error
+  J1 --> I
+  J -->|"No"| K["clave del supervisor si corresponde"]:::pin
+  K --> L["Emite la nota de crédito,<br/>mueve el stock, registra caja<br/>y actualiza la venta"]:::sistema
+  L --> OK(["Imprime la nota<br/>y el comprobante de devolución"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

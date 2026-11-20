@@ -1,0 +1,24 @@
+flowchart TD
+  S(["Menú de caja<br/>Movimiento"]):::persona --> T{"¿Ingreso o egreso?"}:::decision
+  T --> C("Elige categoría<br/>y escribe el monto"):::persona
+  C --> V1{"¿Es un egreso<br/>mayor al efectivo disponible?"}:::decision
+  V1 -->|"Sí"| X1["Bloqueado: solo hay S/ X en caja"]:::error
+  X1 --> C
+  V1 -->|"No"| D("Escribe la descripción"):::persona
+  D --> V2{"¿Descripción vacía?"}:::decision
+  V2 -->|"Sí"| X2["Error junto al campo"]:::error
+  X2 --> D
+  V2 -->|"No"| V3{"¿Mismo monto y categoría<br/>hace menos de 1 min?"}:::decision
+  V3 -->|"Sí"| X3["¿Ya lo registraste?"]:::sistema
+  X3 --> V4
+  V3 -->|"No"| V4{"¿Supera el límite del rol?"}:::decision
+  V4 -->|"Sí"| P["clave del supervisor"]:::pin
+  P --> G
+  V4 -->|"No"| G["Registra el movimiento"]:::sistema
+  G --> OK(["Vale imprimible<br/>y visible en la lista del turno"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

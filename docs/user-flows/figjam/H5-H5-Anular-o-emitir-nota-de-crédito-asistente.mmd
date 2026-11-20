@@ -1,0 +1,32 @@
+flowchart TD
+  S(["Elige el comprobante"]):::persona --> A{"¿Estado del comprobante?"}:::decision
+  A -->|"Ya anulado o con nota"| A1["Bloqueado con el estado actual"]:::error
+  A -->|"Pendiente"| A2["Primero debe aceptarse o corregirse"]:::error
+  A -->|"Aceptado"| B{"¿Hay conexión?"}:::decision
+  B -->|"No"| B1["Necesitas conexión"]:::error
+  B -->|"Sí"| Q{"¿Qué pasó?"}:::decision
+  Q -->|"Devolvió todo"| I1(["Devolución total I1"]):::ok
+  Q -->|"Devolvió una parte"| I2(["Devolución parcial I2"]):::ok
+  Q -->|"Se cambió de prenda"| I3(["Cambio I3"]):::ok
+  Q -->|"Error en datos del cliente"| N1["Nota de crédito de corrección<br/>y nueva emisión"]:::sistema
+  Q -->|"Error en monto o prendas"| N2["Anular y emitir de nuevo"]:::sistema
+  Q -->|"Pidió factura después<br/>de la boleta"| F1["Anula la boleta"]:::sistema
+  F1 --> F2["Crea venta nueva<br/>con las mismas prendas"]:::sistema
+  F2 --> F3("Elige el cliente con RUC"):::persona
+  F3 --> F4["Traslada el pago sin mover dinero<br/>y emite la factura"]:::sistema
+  N1 --> M("Motivo obligatorio"):::persona
+  N2 --> M
+  M --> P["clave del supervisor"]:::pin
+  P --> R["Resumen del efecto:<br/>stock, caja y comprobante"]:::sistema
+  R --> T{"¿La venta es de un turno cerrado?"}:::decision
+  T -->|"Sí"| T1["El reembolso cae en la sesión actual"]:::sistema
+  T1 --> U
+  T -->|"No"| U{"¿Hay efectivo para reembolsar?"}:::decision
+  U -->|"No"| U1["Otro medio o esperar"]:::error
+  U -->|"Sí"| OK(["Se actualizan comprobante,<br/>venta, historial de movimientos y caja"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

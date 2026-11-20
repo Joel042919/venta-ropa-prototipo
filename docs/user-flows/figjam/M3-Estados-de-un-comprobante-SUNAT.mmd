@@ -1,0 +1,17 @@
+stateDiagram-v2
+    state "En proceso" as Pr
+    state "Aceptado" as Ac
+    state "Aceptado con observaciones" as Ob
+    state "No aceptado" as Re
+    state "Anulado" as An
+    state "Con nota de crédito" as Nc
+    [*] --> Pr
+    Pr --> Ac
+    Pr --> Ob
+    Pr --> Re
+    Pr --> Pr: Reintenta
+    Re --> Pr: Corrige y reenvía
+    Ac --> An: Se anula
+    Ac --> Nc: Nota de crédito
+    Ob --> An
+    Ob --> Nc

@@ -1,0 +1,14 @@
+flowchart LR
+  I(["Cajera: Contar el efectivo y cerrar el turno."]):::ini --> N1
+  N1["1. Cerrar caja<br/>Pulsas «Cerrar caja»"]:::paso
+  N1 --> N2
+  N2["2. Resumen<br/>Revisas las ventas del turno"]:::paso
+  N2 --> N3
+  N3["3. Conteo<br/>Cuentas billetes y monedas"]:::paso
+  N3 --> N4
+  N4["4. Diferencia<br/>Confirmas el total contado"]:::paso
+  N4 --> N5
+  N5["5. Cierre<br/>Pulsas «Cerrar»"]:::fin
+classDef paso fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef fin fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef ini fill:#fff,stroke:#78716c,color:#292524,stroke-width:1.5px;

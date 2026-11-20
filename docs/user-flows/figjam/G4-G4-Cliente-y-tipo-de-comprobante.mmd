@@ -1,0 +1,23 @@
+flowchart TD
+  S(["¿Boleta o factura?"]):::decision
+  S -->|"Boleta"| A{"¿El monto exige identificar<br/>al comprador?"}:::decision
+  A -->|"No"| A1(["Clientes varios<br/>o cliente opcional"]):::ok
+  A -->|"Sí"| A2("Pide el documento<br/>antes de cobrar"):::persona
+  A2 --> OK2(["Boleta con cliente identificado"]):::ok
+  S -->|"Factura"| B("Busca el cliente por RUC"):::persona
+  B --> C{"¿Tiene RUC?"}:::decision
+  C -->|"No"| C1["Factura necesita un RUC:<br/>buscar otra empresa o cambiar a boleta"]:::error
+  C -->|"Sí"| D{"¿El RUC está habido?"}:::decision
+  D -->|"No"| D1["Aviso: figura como no habido<br/>¿continuar?"]:::error
+  D1 --> E
+  D -->|"Sí"| E{"¿Responde la validación?"}:::decision
+  E -->|"No"| E1["Continúa con RUC marcado Sin validar"]:::sistema
+  E1 --> OK
+  E -->|"Sí"| OK(["Factura lista para cobrar"]):::ok
+  Z(["La clienta pide factura<br/>después de pagar"]):::persona -.-> Y["No se edita:<br/>ver anulación H5"]:::error
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

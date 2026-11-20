@@ -1,0 +1,23 @@
+flowchart TD
+  S(["Se aleja del puesto<br/>o pulsa Bloquear"]):::persona --> T["Pasan 5 min sin actividad<br/>o bloqueo manual"]:::sistema
+  T --> V{"¿Hay una venta<br/>sin cobrar en pantalla?"}:::decision
+  V -->|"Sí"| W["Pasa a espera automática G7"]:::sistema
+  V -->|"No"| C
+  W --> C["Cubre la pantalla<br/>con el nombre de quien tiene la caja"]:::sistema
+  C --> Q{"¿Qué hace la persona?"}:::decision
+  Q -->|"Escribe su contraseña"| P{"¿Es correcta?"}:::decision
+  P -->|"Sí"| OK(["Vuelve al mismo punto exacto<br/>con su carrito"]):::ok
+  P -->|"No"| E["Error e intentos"]:::error
+  E --> C
+  Q -->|"Otra persona escribe su clave"| R["¿Es el relevo de caja?"]:::decision
+  R -->|"Sí"| B4(["Entregar caja B4"]):::ok
+  R -->|"No"| X["No vende con la sesión de otra persona"]:::error
+  Q -->|"Cambiar de usuario"| H{"¿Caja abierta con ventas?"}:::decision
+  H -->|"Sí"| B4
+  H -->|"No"| L(["Cierra sesión"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

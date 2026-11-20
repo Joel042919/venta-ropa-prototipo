@@ -1,0 +1,18 @@
+flowchart TD
+  S(["Inicia sesión"]):::persona --> A{"¿Queda una sesión<br/>abierta de un día anterior?"}:::decision
+  A -->|"No"| OK0(["Sigue normal B1"]):::ok
+  A -->|"Sí"| B{"¿La sesión es<br/>de esta persona?"}:::decision
+  B -->|"No"| B1["Solo SUP puede forzar el cierre"]:::pin
+  B1 --> D
+  B -->|"Sí"| C["Pantalla bloqueante:<br/>cerrar antes de vender"]:::error
+  C --> D("Cierre tardío:<br/>cuenta el efectivo actual"):::persona
+  D --> E("Observación obligatoria"):::persona
+  E --> F["clave del supervisor"]:::pin
+  F --> G["Cierra con la fecha real"]:::sistema
+  G --> OK(["Ahora abre la caja de hoy B1"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

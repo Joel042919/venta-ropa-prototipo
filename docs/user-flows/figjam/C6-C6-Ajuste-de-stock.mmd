@@ -1,0 +1,23 @@
+flowchart TD
+  S(["Ajustar stock"]):::persona --> A("Busca o escanea la talla y color"):::persona
+  A --> B{"¿Talla y color habilitada<br/>en la sede?"}:::decision
+  B -->|"No"| B1["Pide Habilitar primero"]:::error
+  B1 --> C
+  B -->|"Sí"| C("Elige Entrada o Salida<br/>cantidad y motivo"):::persona
+  C --> D{"¿El motivo es<br/>ingreso de proveedor?"}:::decision
+  D -->|"Sí"| D1["Redirige a Compras D1"]:::sistema
+  D -->|"No"| E{"¿Salida mayor al stock?"}:::decision
+  E -->|"Sí"| E1["Bloqueada: solo hay N<br/>SUP puede forzar"]:::pin
+  E1 --> F
+  E -->|"No"| F["Muestra: pasará de 5 a 8"]:::sistema
+  F --> G{"¿El stock cambió<br/>mientras ajustaba?"}:::decision
+  G -->|"Sí"| G1["Recalcular con el valor actual"]:::sistema
+  G1 --> F
+  G -->|"No"| H["Actualiza stock y<br/>crea el registro en el historial"]:::sistema
+  H --> OK(["Ajuste guardado"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

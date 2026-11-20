@@ -1,0 +1,21 @@
+stateDiagram-v2
+    state "Pendiente" as Pe
+    state "Preparando" as Pr
+    state "Listo para enviar" as Li
+    state "En camino" as En
+    state "Entregado" as Et
+    state "Fallido" as Fa
+    state "Devuelto a tienda" as Dv
+    state "Cancelado" as Ca
+    [*] --> Pe
+    Pe --> Pr
+    Pr --> Li
+    Li --> En
+    En --> Et
+    En --> Fa
+    Fa --> En: Reprograma
+    Fa --> Dv
+    En --> Dv
+    Pe --> Ca
+    Pr --> Ca
+    Li --> Ca

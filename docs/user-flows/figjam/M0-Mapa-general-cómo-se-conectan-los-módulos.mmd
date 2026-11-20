@@ -1,0 +1,42 @@
+flowchart LR
+  subgraph CFG["Configuración"]
+    A3["A3 Sede lista<br/>cajas, series y medios de pago"]:::pin
+  end
+  subgraph STK["Inventario"]
+    C1["C1 Productos y tallas y colores"]:::sistema
+    D1["D1 Compras"]:::sistema
+    C6["C6 Ajustes y conteo"]:::sistema
+    E1["E1 Historial de movimientos"]:::ok
+  end
+  subgraph CAJ["Caja"]
+    B1["B1 Apertura"]:::persona
+    B3["B3 Cierre"]:::persona
+  end
+  subgraph VTA["Venta"]
+    G1["G1 Venta en mostrador"]:::persona
+    H1["H Comprobante SUNAT"]:::sistema
+  end
+  subgraph POST["Posventa"]
+    I1["I Devoluciones y cambios"]:::error
+    J1["J Delivery"]:::decision
+  end
+  A3 --> B1
+  A3 --> C1
+  C1 --> D1
+  D1 --> E1
+  C6 --> E1
+  B1 --> G1
+  G1 --> H1
+  G1 --> E1
+  G1 --> B3
+  G1 --> J1
+  H1 --> I1
+  I1 --> E1
+  I1 --> B3
+  J1 --> I1
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

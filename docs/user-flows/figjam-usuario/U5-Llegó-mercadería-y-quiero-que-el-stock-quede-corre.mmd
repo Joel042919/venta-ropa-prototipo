@@ -1,0 +1,20 @@
+flowchart TD
+  T(("Llega el proveedor con la mercadería")):::disp --> P1["Nueva compra<br/>escribe el RUC del proveedor"]:::pant
+  P1 --> P2["Documento<br/>serie, número y fecha"]:::pant
+  P2 --> D1{"¿Ya registró este documento?"}:::dec
+  D1 -->|"Sí"| R1["Abre la compra existente<br/>para no duplicar"]:::rec
+  D1 -->|"No"| P3["Prendas<br/>escanea o usa la tabla de tallas y colores de tallas"]:::pant
+  P3 --> D2{"¿La prenda ya existe?"}:::dec
+  D2 -->|"No"| P4["La crea ahí mismo<br/>sin salir de la compra"]:::pant
+  P4 --> P5
+  D2 -->|"Sí"| P5["Compara con el total del documento"]:::pant
+  P5 --> D3{"¿Coincide?"}:::dec
+  D3 -->|"No"| R2["Revisa cantidades o costos"]:::rec
+  R2 --> P5
+  D3 -->|"Sí"| OK(["Stock al día<br/>decide si actualiza costos y precios"]):::logro
+classDef disp fill:#292524,stroke:#292524,color:#ffffff,stroke-width:1.5px;
+classDef pant fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef dec fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef sup fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;
+classDef rec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef logro fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;

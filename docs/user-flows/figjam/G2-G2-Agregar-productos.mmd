@@ -1,0 +1,30 @@
+flowchart TD
+  S(["Agregar prenda"]):::persona --> Q{"¿Cómo la busca?"}:::decision
+  Q -->|"Escáner"| A("Lee el código y Enter"):::persona
+  Q -->|"Búsqueda"| B("Nombre o código"):::persona
+  Q -->|"Grilla o Packs"| C("Toca una tarjeta"):::persona
+  A --> D{"¿El código existe?"}:::decision
+  D -->|"No"| D1["No existe el código<br/>buscar por nombre"]:::error
+  D -->|"Sí"| F
+  B --> F
+  C --> F{"¿El producto<br/>está activo?"}:::decision
+  F -->|"No"| F1["Producto desactivado"]:::error
+  F -->|"Sí"| G{"¿Tiene varias tallas y colores?"}:::decision
+  G -->|"Sí"| G1["Selector en tabla de tallas y colores<br/>con el stock por celda"]:::sistema
+  G1 --> H
+  G -->|"No"| H{"¿Hay stock?"}:::decision
+  H -->|"No"| H1["Agotado en esta sede"]:::error
+  H1 --> H2{"¿La prenda está físicamente?"}:::decision
+  H2 -->|"Sí"| H3["Vender sin stock:<br/>clave del supervisor y motivo"]:::pin
+  H3 --> I
+  H2 -->|"No"| H4["Ver otras sedes<br/>solo informativo"]:::sistema
+  H -->|"Sí"| I{"¿La cantidad supera el stock?"}:::decision
+  I -->|"Sí"| I1["Solo quedan N<br/>agrega lo disponible"]:::sistema
+  I1 --> OK
+  I -->|"No"| OK(["Agregado al carrito"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

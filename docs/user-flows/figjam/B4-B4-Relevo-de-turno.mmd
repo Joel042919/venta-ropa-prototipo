@@ -1,0 +1,19 @@
+flowchart TD
+  S(["Saliente pulsa<br/>Entregar caja a..."]):::persona --> A{"¿Ventas en espera?"}:::decision
+  A -->|"Sí"| A1["Resolverlas antes"]:::error
+  A -->|"No"| B("Saliente hace el conteo<br/>como en B3"):::persona
+  B --> C{"¿La persona entrante<br/>inicia sesión?"}:::decision
+  C -->|"No"| C1["El relevo queda pendiente<br/>se sigue con B3 normal"]:::error
+  C -->|"Sí"| D("Entrante revisa el conteo"):::persona
+  D --> E{"¿Está de acuerdo?"}:::decision
+  E -->|"No"| E1["Recontar con SUP presente"]:::pin
+  E1 --> F
+  E -->|"Sí"| F["Cierra la sesión del saliente"]:::sistema
+  F --> G["Abre la sesión del entrante<br/>con ese fondo"]:::sistema
+  G --> OK(["Relevo hecho<br/>sin contar dos veces"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

@@ -1,0 +1,33 @@
+flowchart TD
+  S(["Pulsa Cobrar"]):::persona --> A{"¿Hay medios de pago activos?"}:::decision
+  A -->|"No"| A1["Avisa a tu administrador"]:::error
+  A -->|"Sí"| B("Elige el medio de pago"):::persona
+  B --> Q{"¿Qué medio?"}:::decision
+  Q -->|"Efectivo"| E("Monto recibido<br/>Exacto o billetes sugeridos"):::persona
+  E --> E1{"¿Cubre el total?"}:::decision
+  E1 -->|"No"| E2["Faltan S/ X<br/>Confirmar bloqueado"]:::error
+  E1 -->|"Sí"| E3{"¿Hay efectivo en caja<br/>para el vuelto?"}:::decision
+  E3 -->|"No"| E4["Pide un billete menor<br/>o cobrar por otro medio"]:::error
+  E3 -->|"Sí"| V["Muestra el vuelto grande"]:::sistema
+  Q -->|"Digital"| D("Instrucciones del medio<br/>y N° de operación"):::persona
+  D --> D1{"¿El número ya se usó?"}:::decision
+  D1 -->|"Sí"| D2["Aviso con el comprobante anterior"]:::error
+  D1 -->|"No"| D3{"¿Llegó la notificación?"}:::decision
+  D3 -->|"No"| D4["Esperar o cambiar de medio"]:::sistema
+  D3 -->|"Sí"| M
+  Q -->|"Tarjeta"| T("Referencia del voucher"):::persona
+  T --> T1{"¿Fue rechazada?"}:::decision
+  T1 -->|"Sí"| T2["Otra tarjeta o cambiar de medio<br/>sin perder lo ingresado"]:::error
+  T1 -->|"No"| M
+  V --> M{"¿Quiere agregar<br/>otro medio?"}:::decision
+  M -->|"Sí"| M1["Pago mixto: prellena el resto<br/>máximo 3 medios"]:::sistema
+  M1 --> B
+  M -->|"No"| N{"¿La suma cubre el total?"}:::decision
+  N -->|"No"| N1["Falta un monto"]:::error
+  N -->|"Sí"| OK(["Confirmar<br/>el botón se bloquea contra doble clic"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

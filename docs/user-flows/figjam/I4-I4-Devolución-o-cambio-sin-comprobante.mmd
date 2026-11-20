@@ -1,0 +1,18 @@
+flowchart TD
+  S(["Clienta sin ticket"]):::persona --> A{"¿La compra está en el sistema?"}:::decision
+  A -->|"Sí, se encuentra"| A1(["Sigue como I1 o I3"]):::ok
+  A -->|"No"| B["Solo SUP o ADM"]:::pin
+  B --> C("Pide documento de la clienta,<br/>motivo y condición de la prenda"):::persona
+  C --> D{"¿Qué quiere?"}:::decision
+  D -->|"Reembolso en dinero"| D1["No permitido sin comprobante"]:::error
+  D -->|"Cambio por otra prenda"| E{"¿De igual o menor valor?"}:::decision
+  E -->|"No"| E1["No hay diferencia a favor:<br/>elegir otra prenda"]:::error
+  E1 --> D
+  E -->|"Sí"| F["Registra el movimiento de stock con nota"]:::sistema
+  F --> OK(["Cambio hecho y anotado"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;

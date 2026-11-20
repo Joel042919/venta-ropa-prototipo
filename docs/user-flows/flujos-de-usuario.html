@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgaShop · Flujos de usuario</title>
+<style>
+  :root{--bg:#faf8f5;--card:#fff;--ink:#292524;--muted:#57534e;--line:#e7ddd2;--brand:#c26d60;--brand-text:#9a4a40;--soft:#fbeeea}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+  header{padding:30px 0 8px}
+  h1{font:700 30px Georgia,serif;margin:0 0 6px}
+  .lead{color:var(--muted);margin:0 0 16px;max-width:820px}
+  .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+  .box h2{font:700 18px Georgia,serif;margin:0 0 8px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}
+  .persona{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:14px}
+  .persona b{display:block;color:var(--brand-text);font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .sw{width:16px;height:16px;border-radius:5px;border:2px solid;display:inline-block}
+  nav.tabs{position:sticky;top:0;z-index:10;background:rgba(250,248,245,.96);border-bottom:1px solid var(--line);padding:10px 0}
+  nav.tabs .in{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:600 14px system-ui;cursor:pointer;min-height:40px}
+  .tab[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+  main{padding:18px 0 80px;display:grid;gap:26px}
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .flow-h{padding:16px 18px;border-bottom:1px solid var(--line);background:#fdfaf7}
+  .who{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--brand-text);background:var(--soft);padding:2px 10px;border-radius:999px}
+  .flow-h h2{font:700 22px Georgia,serif;margin:6px 0 2px}
+  .quote{color:var(--muted);margin:0;font-style:italic}
+  .ctx{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .ctx div{background:#f7f3ee;border-radius:12px;padding:10px 12px;font-size:14px}
+  .ctx h3{margin:0 0 4px;font:700 12px system-ui;letter-spacing:.05em;text-transform:uppercase;color:var(--brand-text)}
+  .ctx ul{margin:0;padding-left:16px}
+  .stage{padding:16px;overflow:auto;background:#fff}
+  .stage svg{display:block;margin:0 auto;max-width:100%;height:auto}
+  .stage.natural svg{max-width:none}
+  .design{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;padding:0 18px 18px}
+  .design div{border-radius:12px;padding:12px 14px;font-size:14px}
+  .design h3{margin:0 0 6px;font:700 14px system-ui}
+  .design ul{margin:0;padding-left:18px}
+  .sys{background:#e0e7ff}.sys h3{color:#1e1b4b}
+  .rec{background:#fee2e2}.rec h3{color:#7f1d1d}
+  .ok{background:#dcfce7}.ok h3{color:#14532d}
+  .btns{display:flex;gap:6px;padding:0 18px 14px;flex-wrap:wrap}
+  .btn{border:1px solid var(--line);background:#f5efe8;border-radius:10px;padding:7px 12px;font:600 13px system-ui;cursor:pointer;min-height:36px}
+  .btn:hover{background:#eadfd2}
+  .principle{margin:0 18px 14px;font-size:13px;color:var(--muted)}
+  .principle b{color:var(--ink)}
+  .err{color:#991b1b;background:#fee2e2;border-radius:10px;padding:10px 12px;font-size:13px;white-space:pre-wrap}
+  .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#292524;color:#fff;border-radius:999px;padding:8px 16px;font-size:13px;z-index:50}
+  footer{padding:0 0 40px;color:var(--muted);font-size:14px}
+  @media print{nav.tabs,.btns{display:none}.flow{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>AgaShop · Flujos de usuario</h1>
+  <p class="lead">Cada flujo parte de <b>lo que la persona quiere lograr</b>, no de lo que hace el sistema. El diagrama muestra solo las <b>pantallas que ve</b> y las <b>decisiones que toma</b>. Debajo de cada uno, cómo debe actuar el diseño para acompañarla.</p>
+
+  <div class="box">
+    <h2>Quién usa el sistema <span style="font:13px system-ui;color:#57534e">(personas supuestas, a validar con entrevistas)</span></h2>
+    <div class="grid3">
+      <div class="persona"><b>Cajera o cajero</b>Está de pie, con clientas esperando. Quiere cobrar rápido y no equivocarse con el dinero. Usa el sistema todo el día y no quiere pensar.</div>
+      <div class="persona"><b>Supervisor/a</b>Resuelve lo que la caja no puede: autoriza, corrige, repone. Quiere saber de un vistazo si algo va mal, sin buscar.</div>
+      <div class="persona"><b>Administrador/a o dueño/a</b>Configura y decide. Entra pocas veces. Necesita confiar en que el negocio está bajo control.</div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>Cómo leer los diagramas</h2>
+    <div class="legend">
+      <span><i class="sw" style="background:#292524;border-color:#292524"></i>Lo que dispara el flujo</span>
+      <span><i class="sw" style="background:#eef2ff;border-color:#4f46e5"></i>Pantalla que ve la persona</span>
+      <span><i class="sw" style="background:#fef3c7;border-color:#d97706"></i>Decisión de la persona</span>
+      <span><i class="sw" style="background:#f3e8ff;border-color:#9333ea"></i>Interviene un supervisor</span>
+      <span><i class="sw" style="background:#fee2e2;border-color:#dc2626"></i>Camino de recuperación</span>
+      <span><i class="sw" style="background:#dcfce7;border-color:#16a34a"></i>Logro: la persona consiguió lo que quería</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs"><div class="in" id="tabs"></div></nav>
+<main id="main"></main>
+<footer>Las reglas de SUNAT, plazos y límites son propuestas a validar con el contador. El detalle técnico de cada caso sigue en <code>docs/user-flows/</code>.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+const CLASSES=`
+classDef disp fill:#292524,stroke:#292524,color:#ffffff,stroke-width:1.5px;
+classDef pant fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef dec fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef sup fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;
+classDef rec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef logro fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+`;
+
+const FLOWS=[
+/* 1 */
+{id:'U1',who:'Cajera',title:'Quiero empezar a vender',
+ quote:'Llego, quiero abrir mi caja rápido y no tener sorpresas.',
+ feel:['Apurada: la tienda abre en minutos','Algo nerviosa por el dinero que va a manejar'],
+ need:['Saber qué caja y turno le toca','Que el dinero para vuelto sea el esperado','Que el sistema no la frene con trámites'],
+ win:'Caja abierta y el cursor ya está en el buscador de prendas.',
+ sys:['Propone la caja libre y el turno de la hora: ella solo confirma.','Compara el dinero para vuelto con lo que dejó el turno anterior y avisa si no coincide.','Detecta la caja olvidada de ayer antes de que ella intente vender.'],
+ rec:['Si falta cerrar ayer: la guía a cerrarla primero, sin culparla.','Si la caja está ocupada: le muestra otra libre.','Sin internet: se lo dice claro, no queda en blanco.'],
+ prin:'Valores por defecto inteligentes (menos decisiones) y prevenir errores antes de que ocurran.',
+ code:`
+flowchart TD
+  T(("Llega y empieza su turno")):::disp --> P1["Inicio de sesión"]:::pant
+  P1 -->|"Escribe usuario y contraseña"| D0{"¿Quedó una caja abierta de ayer?"}:::dec
+  D0 -->|"Sí"| R1["Cerrar la caja de ayer<br/>antes de continuar"]:::rec
+  R1 --> P2
+  D0 -->|"No"| P2["Abrir caja<br/>caja y turno ya sugeridos"]:::pant
+  P2 -->|"Confirma o cambia la caja"| P3["Dinero para vuelto"]:::pant
+  P3 --> D1{"¿El dinero para vuelto es el que dejó<br/>el turno anterior?"}:::dec
+  D1 -->|"Sí"| OK(["Caja abierta, lista para vender"]):::logro
+  D1 -->|"No"| P4["Escribe el motivo de la diferencia"]:::pant
+  P4 --> OK
+`},
+/* 2 */
+{id:'U2',who:'Cajera',title:'Una clienta quiere comprar',
+ quote:'Hay una clienta esperando. Quiero cobrarle bien y que se vaya contenta.',
+ feel:['Presión del tiempo y de la fila','Miedo a equivocarse en un monto o en un comprobante'],
+ need:['Encontrar la prenda sin pensar (escanear o buscar)','Ver siempre el total','Saber qué falta para cobrar','Cobrar con cualquier medio, incluso dos a la vez'],
+ win:'La clienta se va con su prenda y su comprobante; la caja y el stock quedan correctos.',
+ sys:['Pide lo mínimo: por defecto es Boleta y Clientes varios.','Solo muestra las tallas y colores que hay en stock.','Mantiene el total y el botón Cobrar siempre a la vista.','Se adelanta al problema: avisa antes de que se agote o cambie un precio.'],
+ rec:['Si se agotó: muestra otras tallas u otras sedes.','Si el descuento pasa su límite: pide el clave de su supervisor sin sacarla de la venta.','Si falla algo al cobrar: no pierde la venta y le dice qué hacer.'],
+ prin:'Reducir la carga cognitiva, dar feedback constante y no perder nunca el trabajo de la persona.',
+ code:`
+flowchart TD
+  T(("Una clienta llega con prendas")):::disp --> P1["Punto de venta<br/>busca o escanea la prenda"]:::pant
+  P1 --> D1{"¿La prenda tiene varias<br/>tallas o colores?"}:::dec
+  D1 -->|"Sí"| P2["Elige talla y color<br/>solo ve lo disponible"]:::pant
+  P2 --> P3
+  D1 -->|"No"| P3["Venta actual<br/>revisa prendas y total"]:::pant
+  P3 --> D2{"¿La clienta quiere factura?"}:::dec
+  D2 -->|"Sí"| P4["Busca a la empresa por RUC"]:::pant
+  P4 --> D3
+  D2 -->|"No"| D3{"¿Le hace un descuento?"}:::dec
+  D3 -->|"Más de su límite"| S1["Su supervisor autoriza con clave"]:::sup
+  S1 --> P5
+  D3 -->|"No, o dentro de su límite"| P5["Cobro<br/>elige cómo paga la clienta"]:::pant
+  P5 --> D4{"¿Paga con un solo medio?"}:::dec
+  D4 -->|"No"| P6["Divide el pago<br/>el sistema dice cuánto falta"]:::pant
+  P6 --> P7
+  D4 -->|"Sí"| P7["Confirmar"]:::pant
+  P7 -->|"Algo falla"| R1["Mensaje claro<br/>la venta no se pierde"]:::rec
+  R1 --> P5
+  P7 --> OK(["Entrega el ticket y despide a la clienta"]):::logro
+`},
+/* 3 */
+{id:'U3',who:'Cajera',title:'Una clienta quiere cambiar o devolver',
+ quote:'La clienta vuelve con una prenda. Quiero resolverlo sin discusiones y sin perder dinero.',
+ feel:['Incómoda: es una situación delicada','Teme que la clienta se moleste o que le falte plata en caja'],
+ need:['Encontrar la compra original fácil','Saber si está dentro del plazo','Ver qué tallas hay para el cambio','Un monto claro de lo que se paga o se devuelve'],
+ win:'La clienta queda conforme y el stock, el dinero y el comprobante cuadran.',
+ sys:['Permite buscar por ticket, QR o DNI: lo que la clienta traiga.','Dice con claridad si está dentro del plazo y qué puede aprobar ella.','Trata el cambio como una sola operación, no dos.','Sugiere devolver por el mismo medio con el que pagó.'],
+ rec:['Si no hay la talla: ofrece otra talla y color, otra sede o convertir en devolución.','Sin ticket: solo un supervisor decide, y solo cambio, nunca dinero.','Fuera de plazo: su supervisor lo aprueba.'],
+ prin:'Evitar la culpa y el error: el sistema explica las reglas antes de que la persona las rompa.',
+ code:`
+flowchart TD
+  T(("Una clienta vuelve con una prenda")):::disp --> P1["Devoluciones<br/>busca la compra con ticket, QR o DNI"]:::pant
+  P1 --> D1{"¿Se encuentra la compra?"}:::dec
+  D1 -->|"No"| S1["Su supervisor decide:<br/>solo cambio por otra prenda, sin dinero"]:::sup
+  S1 --> OK2(["Cambio resuelto"]):::logro
+  D1 -->|"Sí"| D2{"¿Qué quiere la clienta?"}:::dec
+  D2 -->|"Otra talla o color"| P2["Elige la prenda nueva<br/>ve el stock de cada talla"]:::pant
+  P2 --> D3{"¿Hay stock?"}:::dec
+  D3 -->|"No"| R1["Otra talla, otra sede<br/>o convertir en devolución"]:::rec
+  R1 --> D2
+  D3 -->|"Sí"| P3["Ve la diferencia:<br/>igual, a pagar o a favor"]:::pant
+  P3 --> OK1(["Cambio hecho, comprobantes impresos"]):::logro
+  D2 -->|"Quiere su dinero"| D4{"¿Está dentro del plazo?"}:::dec
+  D4 -->|"No"| S2["Su supervisor autoriza"]:::sup
+  S2 --> P4
+  D4 -->|"Sí"| P4["Elige cómo devolver<br/>sugerido: el mismo medio que usó"]:::pant
+  P4 --> OK3(["Devolución hecha, stock y caja al día"]):::logro
+`},
+/* 4 */
+{id:'U4',who:'Cajera',title:'Quiero cerrar mi turno sin problemas',
+ quote:'Terminé. Quiero contar, cuadrar y irme tranquila.',
+ feel:['Cansada al final del turno','Preocupada: ¿me van a culpar si no cuadra?'],
+ need:['Un conteo fácil, billete por billete','Saber qué pendientes quedan','Poder explicar una diferencia sin sentirse acusada'],
+ win:'Turno cerrado, reporte impreso y ella puede irse.',
+ sys:['Revisa los pendientes antes: ventas en espera, comprobantes sin enviar.','Le pide contar sin mostrar cuánto debería haber, para un conteo honesto.','Suma en vivo y confirma el total antes de seguir.','Explica la diferencia sin lenguaje de culpa.'],
+ rec:['Si quedan ventas en espera: las cobra o descarta primero.','Sin internet: guarda su conteo y cierra al volver.','Si se fue sin cerrar: su supervisor hace un cierre hecho por el supervisor.'],
+ prin:'Tono humano y reducción de ansiedad: errores explicados como situaciones a resolver, no culpas.',
+ code:`
+flowchart TD
+  T(("Termina su turno")):::disp --> P1["Cerrar caja"]:::pant
+  P1 --> D1{"¿Quedan ventas en espera?"}:::dec
+  D1 -->|"Sí"| R1["Las cobra o las descarta"]:::rec
+  R1 --> P2
+  D1 -->|"No"| P2["Conteo<br/>cuenta billetes y monedas"]:::pant
+  P2 -->|"Confirma el total contado"| D2{"¿Cuadra con lo esperado?"}:::dec
+  D2 -->|"Sí"| OK(["Turno cerrado, reporte impreso"]):::logro
+  D2 -->|"No"| P3["Escribe qué cree que pasó"]:::pant
+  P3 --> D3{"¿La diferencia es grande?"}:::dec
+  D3 -->|"Sí"| S1["Su supervisor revisa con clave"]:::sup
+  S1 --> OK
+  D3 -->|"No"| OK
+`},
+/* 5 */
+{id:'U5',who:'Supervisor/a',title:'Llegó mercadería y quiero que el stock quede correcto',
+ quote:'Llegó el proveedor. Quiero registrar todo sin errores para vender mañana.',
+ feel:['Atenta: no quiere equivocarse con costos ni cantidades','Impaciente si hay mucha mercadería'],
+ need:['Registrar por talla y color rápido','Que el total coincida con la factura','No duplicar un documento'],
+ win:'Stock actualizado y costos al día, listo para vender.',
+ sys:['Completa el nombre del proveedor con solo el RUC.','Avisa antes de duplicar una compra.','Ofrece una tabla de tallas y colores para ingresar muchas tallas y colores de una vez.','Compara con el total del documento y no deja registrar si no coincide.'],
+ rec:['Si la prenda no existe: la crea ahí mismo, sin salir.','Si el total no coincide: muestra la diferencia para encontrarla.','Si se corta la conexión: guarda un borrador.'],
+ prin:'Prevenir el error, la eficiencia de uso para tareas repetitivas y no obligar a salir del flujo.',
+ code:`
+flowchart TD
+  T(("Llega el proveedor con la mercadería")):::disp --> P1["Nueva compra<br/>escribe el RUC del proveedor"]:::pant
+  P1 --> P2["Documento<br/>serie, número y fecha"]:::pant
+  P2 --> D1{"¿Ya registró este documento?"}:::dec
+  D1 -->|"Sí"| R1["Abre la compra existente<br/>para no duplicar"]:::rec
+  D1 -->|"No"| P3["Prendas<br/>escanea o usa la tabla de tallas y colores de tallas"]:::pant
+  P3 --> D2{"¿La prenda ya existe?"}:::dec
+  D2 -->|"No"| P4["La crea ahí mismo<br/>sin salir de la compra"]:::pant
+  P4 --> P5
+  D2 -->|"Sí"| P5["Compara con el total del documento"]:::pant
+  P5 --> D3{"¿Coincide?"}:::dec
+  D3 -->|"No"| R2["Revisa cantidades o costos"]:::rec
+  R2 --> P5
+  D3 -->|"Sí"| OK(["Stock al día<br/>decide si actualiza costos y precios"]):::logro
+`},
+/* 6 */
+{id:'U6',who:'Supervisor/a',title:'Quiero saber si algo va mal hoy',
+ quote:'No quiero buscar problemas: quiero que el sistema me diga dónde mirar.',
+ feel:['Ocupada: tiene mil cosas a la vez','Quiere tranquilidad, o saber exactamente qué atender'],
+ need:['Una sola pantalla con lo urgente','Que cada alerta lleve directo a resolverla','Saber cuando todo está en orden'],
+ win:'Sabe en 10 segundos si todo está bien, o qué atender primero.',
+ sys:['Muestra primero lo que requiere acción, no todos los números.','Cada alerta es un botón que lleva a la solución.','Cuando no hay nada: lo dice con claridad y no inventa tareas.'],
+ rec:['Si hay un problema: va directo a la bandeja correspondiente.','Si no puede resolverlo: lo delega con un aviso.'],
+ prin:'Visibilidad del estado del sistema y divulgación progresiva: lo urgente primero, el detalle a pedido.',
+ code:`
+flowchart TD
+  T(("Quiere saber si todo va bien")):::disp --> P1["Resumen del día<br/>solo lo que requiere acción"]:::pant
+  P1 --> D1{"¿Hay algo en rojo?"}:::dec
+  D1 -->|"No"| OK1(["Tranquila: todo en orden"]):::logro
+  D1 -->|"Comprobantes sin enviar"| A1["Bandeja de comprobantes<br/>reenvía o corrige"]:::pant
+  D1 -->|"Stock bajo"| A2["Por reponer<br/>crea la compra"]:::pant
+  D1 -->|"Caja con diferencia"| A3["Revisa el cierre<br/>y la observación"]:::pant
+  D1 -->|"Pedidos atrasados"| A4["Pedidos<br/>contacta al courier o al cliente"]:::pant
+  A1 --> OK2(["Problema resuelto o delegado"]):::logro
+  A2 --> OK2
+  A3 --> OK2
+  A4 --> OK2
+`},
+/* 7 */
+{id:'U7',who:'Supervisor/a',title:'Una clienta pide que le lleven su pedido',
+ quote:'La clienta no puede venir. Quiero que le llegue bien y saber dónde está su pedido.',
+ feel:['Preocupada por el pedido: depende de otras personas','Quiere poder avisar a la clienta con confianza'],
+ need:['Datos de entrega completos desde el inicio','Saber en qué paso va el pedido','Poder reprogramar sin rehacer todo'],
+ win:'La clienta recibe su pedido y el cobro queda registrado.',
+ sys:['Exige lo mínimo útil: teléfono y dirección con referencia.','Separa clara la suma: Productos + Envío = Total.','Avisa a la clienta en los pasos importantes con un mensaje ya redactado.','Muestra los pedidos atrasados en rojo.'],
+ rec:['Si la entrega falla: reprograma o devuelve a tienda, sin perder el hilo.','Si falta una prenda al preparar: cambia o quita sin cancelar todo.','Si cancela: devuelve el stock y el dinero.'],
+ prin:'Control y libertad del usuario: puede corregir el rumbo en cualquier paso sin empezar de cero.',
+ code:`
+flowchart TD
+  T(("Una clienta pide envío")):::disp --> P1["Venta<br/>activa Envío"]:::pant
+  P1 --> P2["Datos de entrega<br/>teléfono, dirección y referencia"]:::pant
+  P2 --> D1{"¿Paga ahora o al recibir?"}:::dec
+  D1 -->|"Ahora"| P3["Cobra como una venta normal"]:::pant
+  D1 -->|"Al recibir"| P3b["Queda pendiente de pago"]:::pant
+  P3 --> P4["Preparar pedido<br/>escanea cada prenda"]:::pant
+  P3b --> P4
+  P4 --> P5["Enviar<br/>courier y guía, la clienta recibe aviso"]:::pant
+  P5 --> D2{"¿Se entregó?"}:::dec
+  D2 -->|"Sí"| OK(["Entregado y cobrado"]):::logro
+  D2 -->|"No estaba"| R1["Reprograma o devuelve a tienda"]:::rec
+  R1 --> P5
+`},
+/* 8 */
+{id:'U8',who:'Supervisor/a',title:'Algo salió mal con un comprobante',
+ quote:'Un comprobante no salió bien. Quiero arreglarlo sin romper la caja ni el stock.',
+ feel:['Estresada: involucra a SUNAT y al dinero','Miedo a empeorar las cosas'],
+ need:['Entender qué pasó, en lenguaje simple','Que el sistema le diga cuál es el camino correcto','Poder confiar en que todo queda cuadrado'],
+ win:'Comprobante corregido o reemplazado, y stock y caja al día.',
+ sys:['Le pregunta «¿qué pasó?» en lugar de pedirle que sepa de normativa.','Decide por ella si corresponde anular, corregir o nota de crédito.','Muestra el efecto en stock y caja antes de confirmar.'],
+ rec:['Si el comprobante sigue en proceso: le dice que primero debe aceptarse.','Si no hay conexión: lo explica y no deja a medias.','Si era de un turno cerrado: el efecto va a la caja actual, explicado.'],
+ prin:'Reconocer y recuperarse de errores: mensajes claros, el sistema guía y la acción es reversible o explicada.',
+ code:`
+flowchart TD
+  T(("Un comprobante tiene un problema")):::disp --> P1["Comprobantes<br/>abre el comprobante"]:::pant
+  P1 --> D1{"¿Qué pasó?"}:::dec
+  D1 -->|"SUNAT no lo aceptó por un dato"| P2["Corrige el dato<br/>y lo reenvía"]:::pant
+  P2 --> OK(["Todo queda al día:<br/>comprobante, stock y caja"]):::logro
+  D1 -->|"El monto o las prendas estaban mal"| S1["Autoriza con clave<br/>y escribe el motivo"]:::sup
+  D1 -->|"La clienta pidió factura después"| S1
+  S1 --> P3["Ve el efecto en stock y caja<br/>antes de confirmar"]:::pant
+  P3 --> OK
+  D1 -->|"La clienta devolvió la prenda"| P4["Va a Devoluciones"]:::pant
+  P4 --> OK
+`},
+/* 9 */
+{id:'U9',who:'Administrador/a',title:'Quiero abrir una tienda nueva',
+ quote:'Quiero dejar la tienda lista sin que se me olvide nada.',
+ feel:['Entusiasmada pero con miedo a olvidar algo importante','Entra pocas veces, no recuerda cómo se hace'],
+ need:['Saber en qué paso va y cuánto falta','Que nada importante se pueda olvidar','Poder retomar donde se quedó'],
+ win:'La tienda está lista y el equipo puede vender desde el primer día.',
+ sys:['Es un asistente guiado, no un menú de opciones sueltas.','Muestra el avance y cuánto falta.','Sugiere valores por defecto: IGV 18 %, series B001 y F001.','Se puede dejar a medias y retomar.'],
+ rec:['Si falta algo para vender: el asistente lo dice y lleva ahí.','Si se repite una serie: sugiere la siguiente.','Si abandona: guarda el avance.'],
+ prin:'Reconocer antes que recordar: el sistema guía a una persona que lo usa pocas veces.',
+ code:`
+flowchart TD
+  T(("Se abre una tienda nueva")):::disp --> P1["Asistente de configuración"]:::pant
+  P1 --> P2["Datos de la tienda<br/>RUC, dirección e IGV"]:::pant
+  P2 --> P3["Cajas y series"]:::pant
+  P3 --> P4["Turnos y medios de pago"]:::pant
+  P4 --> P5["Equipo<br/>usuarios y roles"]:::pant
+  P5 --> D1{"¿Falta algo para poder vender?"}:::dec
+  D1 -->|"Sí"| R1["El asistente muestra qué falta<br/>y lleva directo ahí"]:::rec
+  R1 --> P2
+  D1 -->|"No"| OK(["Tienda lista para vender"]):::logro
+`}
+];
+
+const tabs=document.getElementById('tabs'),main=document.getElementById('main');
+const WHOS=['Todos','Cajera','Supervisor/a','Administrador/a'];
+let cur='Todos';
+WHOS.forEach(w=>{const n=w==='Todos'?FLOWS.length:FLOWS.filter(f=>f.who===w).length;const b=document.createElement('button');b.className='tab';b.type='button';b.textContent=w+' ('+n+')';b.setAttribute('aria-pressed',w===cur);
+  b.onclick=()=>{cur=w;[...tabs.children].forEach(t=>t.setAttribute('aria-pressed',t===b));document.querySelectorAll('.flow').forEach(f=>f.style.display=(cur==='Todos'||f.dataset.who===cur)?'':'none');renderVisible()};tabs.appendChild(b)});
+
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const li=a=>'<ul>'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),1800)}
+const cards={};
+FLOWS.forEach((f,i)=>{
+  const s=document.createElement('section');s.className='flow';s.id=f.id;s.dataset.who=f.who;
+  s.innerHTML='<div class="flow-h"><span class="who">'+esc(f.who)+'</span><h2>'+esc(f.id.replace('U',''))+' · '+esc(f.title)+'</h2><p class="quote">«'+esc(f.quote)+'»</p></div>'+
+  '<div class="ctx"><div><h3>Cómo se siente</h3>'+li(f.feel)+'</div><div><h3>Qué necesita ver</h3>'+li(f.need)+'</div><div><h3>Cuándo logró lo que quería</h3><p style="margin:0">'+esc(f.win)+'</p></div></div>'+
+  '<div class="stage"><div style="text-align:center;color:#57534e">Cargando diagrama…</div></div>'+
+  '<div class="btns"><button class="btn" data-a="fit" type="button">Tamaño real</button><button class="btn" data-a="svg" type="button">Descargar SVG</button><button class="btn" data-a="copy" type="button">Copiar Mermaid</button></div>'+
+  '<div class="design"><div class="sys"><h3>Cómo debe actuar el diseño</h3>'+li(f.sys)+'</div><div class="rec"><h3>Si la persona se equivoca</h3>'+li(f.rec)+'</div></div>'+
+  '<p class="principle"><b>Principio de UX:</b> '+esc(f.prin)+'</p>';
+  main.appendChild(s);cards[f.id]={el:s,f,done:false};
+  const stage=s.querySelector('.stage');
+  s.querySelector('[data-a="fit"]').onclick=e=>{stage.classList.toggle('natural');e.target.textContent=stage.classList.contains('natural')?'Ajustar al ancho':'Tamaño real'};
+  s.querySelector('[data-a="svg"]').onclick=()=>{const sv=stage.querySelector('svg');if(!sv){toast('Aún no se dibuja');return}const c=sv.cloneNode(true);c.setAttribute('xmlns','http://www.w3.org/2000/svg');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c.outerHTML],{type:'image/svg+xml'}));a.download=f.id+'.svg';a.click()};
+  s.querySelector('[data-a="copy"]').onclick=async()=>{try{await navigator.clipboard.writeText(f.code.trim()+'\n'+CLASSES);toast('Código copiado')}catch(e){toast('No se pudo copiar')}};
+});
+async function draw(id){const r=cards[id];if(!r||r.done)return;r.done=true;const st=r.el.querySelector('.stage');
+  try{const o=await mermaid.render('svg-'+id,r.f.code.trim()+'\n'+CLASSES);st.innerHTML=o.svg}catch(e){st.innerHTML='<div class="err">No se pudo dibujar.\n'+String(e&&e.message||e)+'</div>';console.error(id,e)}}
+const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)draw(e.target.id)}),{rootMargin:'600px'}):null;
+function renderVisible(){Object.values(cards).forEach(r=>{if(r.el.style.display!=='none'){io?io.observe(r.el):draw(r.f.id)}})}
+window.FLOWS=FLOWS;window.CLASSES=CLASSES;window.drawAll=async()=>{for(const id of Object.keys(cards))await draw(id)};
+if(window.mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:'base',themeVariables:{fontFamily:'system-ui,Segoe UI,sans-serif',fontSize:'15px',lineColor:'#78716c'},flowchart:{useMaxWidth:false,htmlLabels:true,curve:'basis',nodeSpacing:36,rankSpacing:46,padding:12}});renderVisible()}
+else{main.insertAdjacentHTML('afterbegin','<div class="err">No se pudo cargar la librería de diagramas. Revisa tu conexión a internet y recarga.</div>')}
+</script>
+</body>
+</html>

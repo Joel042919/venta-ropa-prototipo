@@ -1,0 +1,30 @@
+flowchart TD
+  S(["Sede nueva"]):::persona --> P1["1 Empresa<br/>razón social y RUC"]:::persona
+  P1 --> V1{"¿RUC válido?"}:::decision
+  V1 -->|"No"| X1["Error junto al campo"]:::error
+  X1 --> P1
+  V1 -->|"Sí"| P2["2 Sede<br/>dirección, RUC y IGV"]:::persona
+  P2 --> V2{"¿IGV en 0?"}:::decision
+  V2 -->|"Sí"| X2["Confirmar que la sede vende exonerada"]:::sistema
+  X2 --> P3
+  V2 -->|"No"| P3["3 Cajas"]:::persona
+  P3 --> P4["4 Series por caja<br/>boleta y factura"]:::persona
+  P4 --> V4{"¿Serie ya existe?"}:::decision
+  V4 -->|"Sí"| X4["Sugerir la siguiente<br/>ejemplo B002"]:::error
+  X4 --> P4
+  V4 -->|"No"| P5["5 Turnos"]:::persona
+  P5 --> P6["6 Medios de pago<br/>mínimo Efectivo"]:::persona
+  P6 --> P7["7 Categorías"]:::persona
+  P7 --> P8["8 Categorías de movimiento de caja"]:::persona
+  P8 --> P9["9 Estados de delivery<br/>si hace envíos"]:::persona
+  P9 --> P10["10 Usuarios y roles"]:::persona
+  P10 --> M{"¿Cumple los mínimos?<br/>caja, serie de boleta,<br/>turno, Efectivo, un SUP"}:::decision
+  M -->|"No"| X5["El punto de venta no abre<br/>y muestra lo que falta"]:::error
+  X5 --> P3
+  M -->|"Sí"| OK(["Tienda lista para vender"]):::ok
+classDef persona fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b,stroke-width:1.5px;
+classDef sistema fill:#ffffff,stroke:#78716c,color:#292524,stroke-width:1.5px;
+classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,stroke-width:1.5px;
+classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:1.5px;
+classDef pin fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:1.5px;
